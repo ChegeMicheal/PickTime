@@ -1,0 +1,21 @@
+#header {
+    background-color: #222 !important;
+    color: orange !important;
+}
+
+#sidebar {
+    background-color: #333 !important;
+    color: orange !important;
+}
+
+#sidebar a {
+    color: orange !important;
+}
+
+#sidebar a:hover {
+    background-color: #444 !important;
+}
+
+#branding a {
+    font-family: Arial, sans-serif;
+}

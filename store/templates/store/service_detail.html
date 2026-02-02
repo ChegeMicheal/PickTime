@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.title }} | Picktime Consulting{% endblock %}
+
+{% block content %}
+<h1>{{ service.title }}</h1>
+<p>{{ service.description }}</p>
+{% if service.icon %}
+    <i class="{{ service.icon }}"></i>
+{% endif %}
+{% endblock %}

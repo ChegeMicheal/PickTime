@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ event.title }} | Picktime Consulting{% endblock %}
+
+{% block content %}
+<section class="event-detail">
+    <div class="container">
+
+        <!-- EVENT ROW -->
+        <div class="event-row">
+
+            <!-- IMAGE (click to zoom) -->
+            <div class="event-image">
+                <a href="#img-zoom-{{ event.id }}">
+                    {% if event.thumbnail %}
+                    <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
+                    {% else %}
+                    <img src="{% static 'images/default-event.jpg' %}" alt="Default event image">
+                    {% endif %}
+
+                    <!-- DATE BADGE -->
+                    <span class="event-date-badge">
+                        {{ event.start_date|date:"M d" }}
+                        {% if event.end_date and event.end_date != event.start_date %}
+                        – {{ event.end_date|date:"M d, Y" }}
+                        {% endif %}
+                    </span>
+                </a>
+            </div>
+
+
+            <!-- TEXT & INFO -->
+            <div class="event-info">
+                <h1>{{ event.title }}</h1>
+
+                <p class="event-date">
+                    📅 {{ event.start_date|date:"F j" }}
+                    {% if event.end_date and event.end_date != event.start_date %}
+                    – {{ event.end_date|date:"F j, Y" }}
+                    {% else %}
+                    , {{ event.start_date|date:"Y" }}
+                    {% endif %}
+
+                    {% if event.location %}
+                    · 📍 {{ event.location }}
+                    {% endif %}
+                </p>
+
+                {% if event.is_future %}
+                <span class="status upcoming">Upcoming</span>
+                {% elif event.is_past %}
+                <span class="status past">Past Event</span>
+                {% else %}
+                <span class="status ongoing">Ongoing</span>
+                {% endif %}
+
+                <div class="event-description">
+                    {{ event.description|linebreaks }}
+                </div>
+
+                <!-- RSVP + VIEW -->
+                <div class="event-actions">
+                    {% if event.is_future and event.rsvp_enabled %}
+                    <a href="{% url 'rsvp_event' event.id %}" class="btn-primary">RSVP</a>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- GALLERY -->
+        {% if event.photos.exists %}
+        <div class="event-photos">
+            <h2>Event Gallery</h2>
+            <div class="photo-grid">
+                {% for photo in event.photos.all %}
+                <div class="photo-card">
+                    <a href="#img-zoom-{{ forloop.counter }}">
+                        <img src="{{ photo.image.url }}" alt="{{ event.title }}">
+                    </a>
+                </div>
+
+                <!-- Individual zoom overlay for each photo -->
+                <div id="img-zoom-{{ forloop.counter }}" class="img-zoom-overlay">
+                    <img src="{{ photo.image.url }}" alt="{{ event.title }}">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- MAIN IMAGE ZOOM -->
+<div id="img-zoom-main" class="img-zoom-overlay">
+    {% if event.thumbnail %}
+    <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
+    {% else %}
+    <img src="{% static 'images/default-event.jpg' %}" alt="Event image">
+    {% endif %}
+</div>
+
+{% endblock %}

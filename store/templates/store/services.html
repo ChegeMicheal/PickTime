@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Our Services | Picktime Consulting{% endblock %}
+
+{% block content %}
+<section class="services-section">
+    <div class="container">
+        <h1>Our Services</h1>
+        <div class="services-list">
+            {% for service in services %}
+                <div class="service-card">
+                    {% if service.icon %}
+                        <i class="{{ service.icon }} service-icon"></i>
+                    {% endif %}
+                    <h3>{{ service.title }}</h3>
+                    <p>{{ service.short_description }}</p>
+                    <div class="service-actions">
+                        <a href="{% url 'service_detail' service.id %}" class="btn-secondary">View Details</a>
+                        {% if service.rsvp_enabled %}
+                            <a href="{% url 'rsvp_service' service.id %}" class="btn-primary">RSVP</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <p>No services available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

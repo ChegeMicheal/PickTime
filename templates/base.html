@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Picktime Consulting{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="site-header">
+        <div class="container header-container">
+
+            <div class="logo">
+                <img src="{% static 'images/logo.jpg' %}" alt="Picktime Consulting" class="logo-img">
+            </div>
+
+            <nav class="site-nav" id="site-nav">
+                <a href="{% url 'landing' %}">Home</a>
+                <a href="{% url 'services' %}">Our Services</a>
+                <a href="{% url 'events_list' %}">Events</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </nav>
+
+            <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+        </div>
+    </header>
+
+    <!-- ================= MAIN ================= -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+            <p>&copy; {{ now|date:"Y" }} Picktime Consulting. All Rights Reserved.</p>
+            <p>
+                Follow us:
+                <a href="#">LinkedIn</a> |
+                <a href="#">Twitter</a> |
+                <a href="#">Facebook</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ================= JS ================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburger = document.getElementById('hamburger');
+            const nav = document.getElementById('site-nav');
+
+            if (!hamburger || !nav) return;
+
+            hamburger.addEventListener('click', function () {
+                nav.classList.toggle('nav-active');
+                hamburger.classList.toggle('open');
+            });
+        });
+    </script>
+
+    <script>
+        const pastBtn = document.getElementById('show-past-btn');
+        const pastEvents = document.getElementById('past-events');
+
+        if (pastBtn) {
+            pastBtn.addEventListener('click', () => {
+                if (pastEvents.style.display === "none") {
+                    pastEvents.style.display = "block";
+                    pastBtn.textContent = "Hide Past Events";
+                } else {
+                    pastEvents.style.display = "none";
+                    pastBtn.textContent = "View Past Events";
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
