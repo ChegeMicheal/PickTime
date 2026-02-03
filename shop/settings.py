@@ -122,3 +122,10 @@ MEDIA_ROOT = BASE_DIR / 'media'  # filesystem path where uploaded files are stor
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'noreply@djangoshop.com'
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "chegemichael003@gmail.com"
+EMAIL_HOST_PASSWORD = "xwssknxdlvsxhwyp"
+DEFAULT_FROM_EMAIL = "Picktime Consulting <chegemichael003@gmail.com>"

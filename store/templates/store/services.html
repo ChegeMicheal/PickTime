@@ -4,28 +4,62 @@
 {% block title %}Our Services | Picktime Consulting{% endblock %}
 
 {% block content %}
-<section class="services-section">
+<!-- ===================== SERVICES ===================== -->
+<section id="services" class="services-section">
     <div class="container">
-        <h1>Our Services</h1>
-        <div class="services-list">
-            {% for service in services %}
-                <div class="service-card">
-                    {% if service.icon %}
-                        <i class="{{ service.icon }} service-icon"></i>
+        <h2>Our Services</h2>
+
+        {% if services %}
+        {% for service in services %}
+        <div class="service-row event-row">
+
+            <!-- Service image -->
+            <div class="service-image event-image">
+                <a href="{% url 'service_detail' service.id %}">
+                    {% if service.image %}
+                    <img src="{{ service.image.url }}" alt="{{ service.title }}">
+                    {% else %}
+                    <img src="{% static 'images/default-service.jpg' %}" alt="Service image">
                     {% endif %}
-                    <h3>{{ service.title }}</h3>
-                    <p>{{ service.short_description }}</p>
-                    <div class="service-actions">
-                        <a href="{% url 'service_detail' service.id %}" class="btn-secondary">View Details</a>
-                        {% if service.rsvp_enabled %}
-                            <a href="{% url 'rsvp_service' service.id %}" class="btn-primary">RSVP</a>
-                        {% endif %}
-                    </div>
+                </a>
+            </div>
+
+
+            <!-- Service info -->
+            <div class="service-info event-info">
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.short_description|default:"No description set." }}</p>
+                <!-- MINI SERVICES (desktop only) -->
+                {% if service.mini_services.all %}
+                <ul class="mini-services">
+                    <h4 style="color: darkblue;">Mini services</h4>
+                    {% for mini in service.mini_services.all %}
+                    <li style="margin-left: 20px;">
+                        <strong>{{ mini.title }}</strong>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+                <div class="event-actions">
+                    <a href="{% url 'service_detail' service.id %}" class="btn-secondary-1">
+                        Learn More
+                    </a>
+                    <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
+                        class="btn-primary">
+                        Request Service
+                    </a>
                 </div>
-            {% empty %}
-                <p>No services available at the moment.</p>
-            {% endfor %}
+
+            </div>
+
         </div>
+        {% endfor %}
+
+        {% else %}
+        <p class="no-events-msg">No services available at the moment.</p>
+        {% endif %}
+
     </div>
 </section>
 {% endblock %}

@@ -1,12 +1,84 @@
 {% extends "base.html" %}
-{% block title %}Contact | Picktime Consulting{% endblock %}
+{% load static %}
+
+{% block title %}Contact Us | Picktime Consulting{% endblock %}
 
 {% block content %}
+
 <section class="contact-section">
-    <div class="container">
-        <h1>Get in Touch</h1>
-        <p>Email: info@picktimeconsulting.com</p>
-        <p>Phone: +254 XXX XXX XXX</p>
+    <div class="container contact-container">
+        <!-- SECTION HEADER -->
+        <h2>Let's Connect</h2>
+        <p>We’re here to support your journey. Whether you have questions, need a consultation, or want to explore
+            collaboration, we’d love to hear from you.</p> <br>
+
+        <!-- CONTACT INFO -->
+        <div class="contact-details">
+            <p><strong>Office <i class="fa fa-phone" aria-hidden="true"></i>:</strong> +254 0117 249 150 / +254 722 962
+                280</p>
+            <p><strong><i class="fa fa-envelope" aria-hidden="true"></i>:</strong> <a
+                    href="mailto:info@picktimeconsulting.co.ke">info@picktimeconsulting.co.ke</a>
+            </p>
+            <p><strong>Address:</strong> Maendeleo House, 6th Floor, Along Monrovia Street, Opposite Anniversary Towers,
+                Nairobi, Kenya</p>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+            <h2>Get in Touch</h2>
+
+            <form action="{% url 'contact' %}" method="POST" class="contact-form">
+                {% csrf_token %}
+
+                <label for="full_name">Full Name</label>
+                {{ form.full_name }}
+
+                <label for="email">Email</label>
+                {{ form.email }}
+
+                <label for="phone">Phone</label>
+                {{ form.phone }}
+
+                <label for="subject">Subject</label>
+                {{ form.subject }}
+
+                <label for="service">Service</label>
+                {{ form.service }}
+
+                <label for="message">Message</label>
+                {{ form.message }}
+
+                <button type="submit" class="btn-primary" style="margin-left: 25%; margin-right: 25%;">Send
+                    Message</button>
+            </form>
+
+            {% if success_message %}
+            <p class="success-message">{{ success_message }}</p>
+            {% endif %}
+
+        </div>
+
+
+        <!-- MAP + BUTTON -->
+        <div class="map-wrapper" style="position:relative; margin-top:1.5rem;">
+
+            <!-- Get Directions Button -->
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Maendeleo+House+Monrovia+Street+Nairobi+Kenya"
+                target="_blank" class="btn-secondary-1 floating-map-btn">
+                Get Directions &nbsp; &nbsp;<i class="fa-solid fa-location-arrow"></i>
+            </a>
+
+            <!-- Embedded Map -->
+            <iframe src="https://www.google.com/maps?q=Maendeleo+House+Monrovia+Street+Nairobi+Kenya&output=embed"
+                width="100%" height="450" style="border:0;" allowfullscreen loading="lazy">
+            </iframe>
+
+
+        </div>
+
     </div>
 </section>
+
+
+
 {% endblock %}

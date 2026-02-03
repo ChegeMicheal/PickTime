@@ -12,7 +12,7 @@
 
             <!-- IMAGE (click to zoom) -->
             <div class="event-image">
-                <a href="#img-zoom-{{ event.id }}">
+                <a href="#img-zoom-main">
                     {% if event.thumbnail %}
                     <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
                     {% else %}
@@ -62,33 +62,40 @@
                 <!-- RSVP + VIEW -->
                 <div class="event-actions">
                     {% if event.is_future and event.rsvp_enabled %}
-                    <a href="{% url 'rsvp_event' event.id %}" class="btn-primary">RSVP</a>
+                    <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
+                        class="btn-primary">
+                        Request Service
+                    </a>
+
+
                     {% endif %}
                 </div>
             </div>
 
         </div>
 
-        <!-- GALLERY -->
+        <!-- ===================== GALLERY ===================== -->
         {% if event.photos.exists %}
         <div class="event-photos">
             <h2>Event Gallery</h2>
+
             <div class="photo-grid">
                 {% for photo in event.photos.all %}
                 <div class="photo-card">
-                    <a href="#img-zoom-{{ forloop.counter }}">
+                    <a href="#img-zoom-{{ event.id }}-{{ forloop.counter }}">
                         <img src="{{ photo.image.url }}" alt="{{ event.title }}">
                     </a>
                 </div>
 
-                <!-- Individual zoom overlay for each photo -->
-                <div id="img-zoom-{{ forloop.counter }}" class="img-zoom-overlay">
+                <!-- Zoom overlay -->
+                <div id="img-zoom-{{ event.id }}-{{ forloop.counter }}" class="img-zoom-overlay">
                     <img src="{{ photo.image.url }}" alt="{{ event.title }}">
                 </div>
                 {% endfor %}
             </div>
         </div>
         {% endif %}
+
 
     </div>
 </section>

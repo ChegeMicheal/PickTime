@@ -47,7 +47,12 @@
                     <p>{{ event.description|truncatewords:30 }}</p>
                     <div class="event-actions">
                         {% if event.rsvp_enabled %}
-                        <a href="{% url 'rsvp_event' event.id %}" class="btn-primary">RSVP</a>
+                        <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
+                            class="btn-primary">
+                            Request Service
+                        </a>
+
+
                         {% endif %}
                         <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a>
                     </div>
@@ -101,7 +106,12 @@
                     <p>{{ event.description|truncatewords:30 }}</p>
                     <div class="event-actions">
                         {% if event.rsvp_enabled %}
-                        <a href="{% url 'rsvp_event' event.id %}" class="btn-primary">RSVP</a>
+                        <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
+                            class="btn-primary">
+                            Request Service
+                        </a>
+
+
                         {% endif %}
                         <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a>
                     </div>

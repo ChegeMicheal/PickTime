@@ -1,0 +1,18 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Reply to {{ submission.name }} ({{ submission.email }})</h1>
+
+<p><strong>Subject:</strong> {{ submission.subject }}</p>
+<p><strong>Original Message:</strong></p>
+<blockquote>{{ submission.message|linebreaks }}</blockquote>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="button">Send Reply</button>
+</form>
+
+<a href="{% url 'admin:store_contactsubmission_changelist' %}">Back to Submissions</a>
+{% endblock %}

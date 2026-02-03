@@ -1,11 +1,90 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ service.title }} | Picktime Consulting{% endblock %}
 
 {% block content %}
-<h1>{{ service.title }}</h1>
-<p>{{ service.description }}</p>
-{% if service.icon %}
-    <i class="{{ service.icon }}"></i>
-{% endif %}
+<section class="event-detail service-detail">
+    <div class="container">
+
+        <!-- SERVICE ROW -->
+        <div class="event-row">
+
+            <!-- IMAGE (click to zoom) -->
+            <div class="event-image">
+                <a href="#img-zoom-main-{{ service.id }}">
+                    {% if service.image %}
+                    <img src="{{ service.image.url }}" alt="{{ service.title }}">
+                    {% else %}
+                    <img src="{% static 'images/default-service.jpg' %}" alt="Default service image">
+                    {% endif %}
+                </a>
+            </div>
+
+            <!-- TEXT & INFO -->
+            <div class="event-info">
+                <h1>{{ service.title }}</h1>
+
+                <div class="event-description">
+                    <p>{{ service.short_description|default:"No description set." }}</p><br>
+
+                    {% if service.mini_services.exists %}
+                    <h3 style="color: darkblue;">Mini Services</h3>
+                    <ul style="margin-left: 20px;">
+                        {% for mini in service.mini_services.all %}
+                        <li>
+                            <strong>{{ mini.title }}</strong>
+                            {% if mini.short_description %}
+                            <br>{{ mini.short_description }} <br><br>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <!-- ACTION -->
+                <div class="event-actions" style="margin-top:1.5rem;">
+                    <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
+                       class="btn-primary">
+                        Request Service
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===================== GALLERY ===================== -->
+        {% if service.photos.exists %}
+        <div class="event-photos">
+            <h2>Service Gallery</h2>
+            <div class="photo-grid">
+                {% for photo in service.photos.all %}
+                <div class="photo-card">
+                    <a href="#img-zoom-{{ service.id }}-{{ forloop.counter }}">
+                        <img src="{{ photo.image.url }}" alt="{{ service.title }}">
+                    </a>
+                </div>
+
+                <!-- Zoom overlay -->
+                <div id="img-zoom-{{ service.id }}-{{ forloop.counter }}" class="img-zoom-overlay">
+                    <img src="{{ photo.image.url }}" alt="{{ service.title }}">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- MAIN IMAGE ZOOM -->
+<div id="img-zoom-main-{{ service.id }}" class="img-zoom-overlay">
+    {% if service.image %}
+    <img src="{{ service.image.url }}" alt="{{ service.title }}">
+    {% else %}
+    <img src="{% static 'images/default-service.jpg' %}" alt="Service image">
+    {% endif %}
+</div>
+
 {% endblock %}

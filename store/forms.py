@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import ContactSubmission
+
 
 class SignupForm(forms.ModelForm):
     password = forms.CharField(
@@ -49,3 +51,25 @@ class ForgotPasswordForm(forms.Form):
             'class': 'form-control'
         })
     )
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactSubmission
+        fields = ['full_name', 'email', 'phone', 'subject', 'service', 'message']
+        widgets = {
+            'full_name': forms.TextInput(attrs={'placeholder': 'Your full name'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Your email'}),
+            'phone': forms.TextInput(attrs={'placeholder': 'phone'}),
+            'subject': forms.TextInput(attrs={'placeholder': 'Subject'}),
+            'service': forms.TextInput(attrs={'placeholder': 'Service'}),
+            'message': forms.Textarea(attrs={'placeholder': 'Write your message'}),
+        }
+
+
+class ContactReplyForm(forms.Form):
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={'rows':5, 'placeholder':'Type your reply here…'}),
+        label="Reply Message",
+        required=True
+    )
+

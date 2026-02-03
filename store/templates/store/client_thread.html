@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="event-detail">
+    <div class="container">
+
+        <h2>{{ submission.subject }}</h2>
+        <p><strong>Status:</strong> {{ submission.get_status_display }}</p>
+
+        <div class="event-description">
+            <p><strong>You wrote:</strong></p>
+            <p>{{ submission.message|linebreaks }}</p>
+        </div>
+
+        <hr>
+
+        <h3>Replies</h3>
+
+        {% for reply in submission.replies.all %}
+            <div class="reply-card">
+                <p>{{ reply.body|linebreaks }}</p>
+                <small>{{ reply.sent_at }}</small>
+            </div>
+        {% empty %}
+            <p>No replies yet.</p>
+        {% endfor %}
+
+    </div>
+</section>
+{% endblock %}

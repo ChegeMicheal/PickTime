@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.timezone import now
+from django.utils.text import slugify
 
 
 # =========================
@@ -8,29 +9,28 @@ from django.utils.timezone import now
 # =========================
 class Service(models.Model):
     title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True, null=True)
     short_description = models.TextField()
-    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to="services/", blank=True, null=True)
 
-    icon = models.CharField(
-        max_length=50,
+    parent = models.ForeignKey(
+        "self",
+        on_delete=models.CASCADE,
+        null=True,
         blank=True,
-        help_text="Optional icon class (e.g. fa-solid fa-briefcase)"
-    )
+        related_name="mini_services"
+    )  # New field to link mini-services to parent
 
-    rsvp_enabled = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0)
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ["order", "title"]
+        ordering = ["order"]
 
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse("service_detail", args=[self.id])
 
 
 # =========================
@@ -102,3 +102,50 @@ class EventPhoto(models.Model):
 
     def __str__(self):
         return f"Photo for {self.event.title}"
+
+
+# =========================
+# CONTACT FORM
+# =========================
+
+import uuid
+
+class ContactSubmission(models.Model):
+    full_name = models.CharField(max_length=150)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    subject = models.CharField(max_length=150, blank=True, null=True)
+    service = models.CharField(max_length=150, blank=True, null=True)
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices=[
+            ("new", "New"),
+            ("replied", "Replied"),
+            ("resolved", "Resolved"),
+        ],
+        default="new"
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+# REPLY MODEL
+# =========================
+class ContactReply(models.Model):
+    submission = models.ForeignKey(
+        ContactSubmission,
+        on_delete=models.CASCADE,
+        related_name="replies"
+    )
+
+    body = models.TextField()
+    sent_by_admin = models.BooleanField(default=True)
+    sent_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Reply to {self.submission.email}"
+

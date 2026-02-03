@@ -16,6 +16,12 @@ urlpatterns = [
 
     # Contact
     path('contact/', views.contact, name='contact'),
+    path(
+    "message/<uuid:token>/",
+    views.client_message_thread,
+    name="client_message_thread"
+),
+    path('admin/contact-reply/<int:submission_id>/', views.contact_reply, name='contact_reply'),
 
     # Auth
     path('login/', views.login_view, name='login'),

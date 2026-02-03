@@ -12,6 +12,64 @@
         <a href="#events" class="btn-primary">Explore Events</a> <br>
     </div>
 </section>
+<!-- ===================== SERVICES ===================== -->
+<section id="services" class="services-section">
+    <div class="container">
+        <h2>Our Services</h2>
+
+        {% if services %}
+        {% for service in services %}
+        <div class="service-row event-row">
+
+            <!-- Service image -->
+            <div class="service-image event-image">
+                <a href="{% url 'service_detail' service.id %}">
+                    {% if service.image %}
+                    <img src="{{ service.image.url }}" alt="{{ service.title }}">
+                    {% else %}
+                    <img src="{% static 'images/default-service.jpg' %}" alt="Service image">
+                    {% endif %}
+                </a>
+            </div>
+
+
+            <!-- Service info -->
+            <div class="service-info event-info">
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.short_description|default:"No description set." }}</p>
+                <!-- MINI SERVICES (desktop only) -->
+                {% if service.mini_services.all %}
+                <ul class="mini-services">
+                    <h4 style="color: darkblue;">Mini services</h4>
+                    {% for mini in service.mini_services.all %}
+                    <li style="margin-left: 20px;">
+                        <strong>{{ mini.title }}</strong>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+                <div class="event-actions">
+                    <a href="{% url 'service_detail' service.id %}" class="btn-secondary-1">
+                        Learn More
+                    </a>
+                    <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
+                        class="btn-primary">
+                        Request Service
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <p class="no-events-msg">No services available at the moment.</p>
+        {% endif %}
+
+    </div>
+</section>
 
 <!-- ===================== EVENTS ===================== -->
 <section id="events" class="events-section">
@@ -58,7 +116,12 @@
 
                 <div class="event-actions">
                     {% if event.rsvp_enabled %}
-                    <a href="{% url 'rsvp_event' event.id %}" class="btn-primary">RSVP</a>
+                    <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
+                        class="btn-primary">
+                        Request Service
+                    </a>
+
+
                     {% endif %}
                     <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a>
                 </div>
@@ -117,7 +180,11 @@
 
                 <div class="event-actions">
                     {% if event.rsvp_enabled %}
-                    <a href="{% url 'rsvp_event' event.id %}" class="btn-primary">RSVP</a>
+                    <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
+                        class="btn-primary">
+                        Request Service
+                    </a>
+
                     {% endif %}
                     <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a>
                 </div>
