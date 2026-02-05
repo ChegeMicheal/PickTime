@@ -66,10 +66,15 @@ class ContactForm(forms.ModelForm):
         }
 
 
+
 class ContactReplyForm(forms.Form):
     message = forms.CharField(
-        widget=forms.Textarea(attrs={'rows':5, 'placeholder':'Type your reply here…'}),
-        label="Reply Message",
-        required=True
+        widget=forms.Textarea(attrs={'rows': 6, 'cols': 60}),
+        label='Reply Message'
     )
+    attachment = forms.FileField(
+        required=False,
+        label="Attachment"
+    )
+
 

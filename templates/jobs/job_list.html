@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Careers | Picktime Consulting{% endblock %}
+
+{% block content %}
+<!-- ===================== JOBS ===================== -->
+<section id="jobs" class="services-section">
+    <div class="container">
+        <h2>Careers</h2>
+
+        {% if jobs %}
+        <div class="jobs-list">
+            {% for job in jobs %}
+            <div class="service-row event-row">
+
+
+                <!-- Job image / poster -->
+                <div class="event-image">
+                    <a href="{% if job.poster %}#img-zoom-{{ job.id }}{% else %}#{% endif %}">
+                        {% if job.poster %}
+                        <img src="{{ job.poster.url }}" alt="{{ job.title }}">
+                        {% else %}
+                        <img src="{% static 'images/default-job.jpg' %}">
+                        {% endif %}
+
+                        <span class="event-date-badge job-badge" data-days="{{ job.days_remaining }}">
+                            {% if job.days_remaining > 1 %}
+                            {{ job.days_remaining }} days left
+                            {% elif job.days_remaining == 1 %}
+                            Closes tomorrow
+                            {% else %}
+                            Closing today
+                            {% endif %}
+                        </span>
+                    </a>
+                </div>
+
+
+
+                <!-- Job info -->
+                <div class="service-info event-info">
+                    <h3>{{ job.title }}</h3>
+                    <p>{{ job.short_description }}</p>
+                    <div class="event-actions">
+                        {% if job.description_file %}
+                        <a href="{{ job.description_file.url }}" download class="btn-secondary-1">
+                            Download JD
+                        </a>
+                        {% endif %}
+                        {% if job.days_remaining >= 0 %}
+                        <a href="{{ job.apply_link }}" class="btn-primary">Apply Now</a>
+                        {% else %}
+                        <button class="btn-disabled" disabled>Applications Closed</button>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+            </div>
+
+            {# Zoom overlay for this job poster #}
+            <div id="img-zoom-{{ job.id }}" class="img-zoom-overlay">
+                {% if job.poster %}
+                <img src="{{ job.poster.url }}" alt="{{ job.title }}">
+                {% else %}
+                <img src="{% static 'images/default-job.jpg' %}" alt="Job image">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="no-events-msg">No job openings at the moment.</p>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

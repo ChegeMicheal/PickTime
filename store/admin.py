@@ -8,6 +8,8 @@ from .forms import ContactReplyForm
 from django.urls import path, reverse
 from django.utils.html import format_html
 from django import forms
+from django.core.mail import EmailMessage
+
 
 # =========================
 # SERVICES ADMIN
@@ -19,7 +21,6 @@ class MiniServiceInline(admin.TabularInline):
     verbose_name = "Mini Service"
     verbose_name_plural = "Mini Services"
     
-
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ["title", "parent", "is_active", "order"]
@@ -99,11 +100,6 @@ class EventPhotoAdmin(admin.ModelAdmin):
     list_display = ("event", "caption")
     search_fields = ("event__title",)
 
-class ContactReplyForm(forms.Form):
-    message = forms.CharField(
-        widget=forms.Textarea(attrs={'rows': 6, 'cols': 60}),
-        label='Reply Message'
-    )
 
 @admin.register(ContactSubmission)
 class ContactSubmissionAdmin(admin.ModelAdmin):
@@ -133,34 +129,51 @@ class ContactSubmissionAdmin(admin.ModelAdmin):
         submission = get_object_or_404(ContactSubmission, pk=submission_id)
 
         if request.method == 'POST':
-            form = ContactReplyForm(request.POST)
+            form = ContactReplyForm(request.POST, request.FILES)
+
             if form.is_valid():
                 reply_msg = form.cleaned_data['message']
+                attachment = form.cleaned_data.get('attachment')
 
-                # Send email to user
-                send_mail(
+                email = EmailMessage(
                     subject=f"Reply to your message: {submission.subject}",
-                    message=reply_msg,
-                    from_email=None,  # default from_email in settings
-                    recipient_list=[submission.email],
+                    body=reply_msg,
+                    to=[submission.email],
                 )
 
-                # Optional: mark as replied
+                if attachment:
+                    email.attach(
+                        attachment.name,
+                        attachment.read(),
+                        attachment.content_type
+                    )
+
+                email.send()
+
                 submission.status = 'replied'
                 submission.save()
 
                 self.message_user(request, "Reply sent successfully!")
                 return redirect('admin:store_contactsubmission_changelist')
+
+            # ❗ IMPORTANT: invalid form falls through here
+            # We DO NOT return yet — continue to render below
+
         else:
             form = ContactReplyForm(initial={
-                'message': f"Hi {submission.full_name},\n\nRegards,\n\nPicktime Consulting (K) Ltd"  # prefill greeting
+                'message': (
+                    f"Hi {submission.full_name},\n\n"
+                    f"[Type your reply here]\n\n"
+                    f"Regards,\n"
+                    f"Picktime Consulting (K) Ltd"
+                )
             })
 
         context = {
             'form': form,
             'submission': submission,
             'opts': self.model._meta,
-            'title': f"Reply to {submission.full_name}"
+            'title': f"Reply to {submission.full_name}",
         }
 
         return render(request, 'store/admin/contact_reply.html', context)
@@ -168,8 +181,18 @@ class ContactSubmissionAdmin(admin.ModelAdmin):
 def change_view(self, request, object_id, form_url='', extra_context=None):
     if extra_context is None:
         extra_context = {}
-    extra_context['reply_url'] = reverse('admin:contactsubmission-reply', args=[object_id])
-    return super().change_view(request, object_id, form_url, extra_context=extra_context)
+
+    submission = self.get_object(request, object_id)
+
+    extra_context['reply_url'] = reverse(
+        'admin:contactsubmission-reply',
+        args=[object_id]
+    )
+    extra_context['has_reply'] = submission.status == 'replied'
+
+    return super().change_view(
+        request, object_id, form_url, extra_context=extra_context
+    )
 
 
 @admin.action(description="Mark selected messages as resolved")

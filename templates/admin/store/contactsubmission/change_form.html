@@ -1,0 +1,15 @@
+{% extends "admin/change_form.html" %}
+
+{% block after_field_sets %}
+    {{ block.super }}
+
+    {% if has_reply %}
+        <p style="margin: 10px 0; color: green; font-weight: bold;">
+            ✔ This message has already been replied to
+        </p>
+    {% endif %}
+
+    <p>
+        <a class="button" href="{{ reply_url }}">Reply to Message</a>
+    </p>
+{% endblock %}

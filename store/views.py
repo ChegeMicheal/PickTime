@@ -29,10 +29,12 @@ def signup_view(request):
 # -------------------------
 # LANDING PAGE
 # -------------------------
+from datetime import timedelta
 def landing(request):
     services = Service.objects.filter(parent__isnull=True, is_active=True)
     
     today = timezone.now().date()
+    two_months_later = today + timedelta(days=60)
 
     # Ongoing events: start_date <= today <= end_date
     ongoing_events = Event.objects.filter(
@@ -42,7 +44,8 @@ def landing(request):
 
     # Upcoming events: start_date > today
     upcoming_events = Event.objects.filter(
-        start_date__gt=today
+        start_date__gt=today,
+        start_date__lte=two_months_later
     ).order_by("start_date")
 
     # Past events: end_date < today

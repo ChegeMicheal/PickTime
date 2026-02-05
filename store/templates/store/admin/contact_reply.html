@@ -8,11 +8,15 @@
 <p><strong>Original Message:</strong></p>
 <blockquote>{{ submission.message|linebreaks }}</blockquote>
 
-<form method="POST">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="button">Send Reply</button>
+
+    <div style="margin-top: 15px;">
+        <button type="submit" class="default">Send Reply</button>
+    </div>
 </form>
+
 
 <a href="{% url 'admin:store_contactsubmission_changelist' %}">Back to Submissions</a>
 {% endblock %}

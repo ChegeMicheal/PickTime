@@ -34,7 +34,16 @@ body { font-family: Arial, sans-serif; color:#333; }
     color: #fff;
     font-weight: 600;
     text-decoration: none;
+    margin: 2px;
 }
+
+.site-nav a:hover {
+    color: #004aad;
+    background: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
 
 
 /* ================= HAMBURGER ================= */
@@ -114,9 +123,13 @@ body { font-family: Arial, sans-serif; color:#333; }
 .hero h1 { font-size:2.8rem; color:#004aad; }
 
 /* BUTTONS */
-.btn-primary { background:#ff7f11; color:#fff; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
+.btn-primary { background:#004aad; color:#fff; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
 .btn-secondary { border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
-.btn-secondary-1 { background:#004aad; color: white; border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
+.btn-secondary-1 { background:transparent; color: #004aad; border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
+
+.btn-primary:hover { background:transparent; color:#004aad; border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
+.btn-secondary:hover { border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; background: lightgray; }
+.btn-secondary-1:hover { background:#004aad; color: white; border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
 
 /* EVENTS */
 .event-row {
@@ -244,9 +257,9 @@ body { font-family: Arial, sans-serif; color:#333; }
     z-index: 10;
 }
 
-.event-row.upcoming-event .event-date-badge { background: #1b7f3b; }  /* green */
-.event-row.ongoing-event .event-date-badge   { background: #b35c00; }  /* orange */
-.event-row.past-event .event-date-badge      { background: #6b7280; }  /* gray */
+.upcoming-event .event-date-badge { background: #1b7f3b; }  /* green */
+.ongoing-event .event-date-badge   { background: #b35c00; }  /* orange */
+.past-event .event-date-badge      { background: #6b7280; }  /* gray */
 
 .event-row {
     display: flex;
@@ -370,7 +383,7 @@ body { font-family: Arial, sans-serif; color:#333; }
 
 /* ===================== Buttons ===================== */
 .contact-form .btn-primary {
-    background-color: #ff6600; /* your accent color */
+    background-color: #004aad; /* your accent color */
     align-self: center; 
     color: #fff;
     display: block;        
@@ -385,7 +398,9 @@ body { font-family: Arial, sans-serif; color:#333; }
 }
 
 .contact-form .btn-primary:hover {
-    background-color: #e65c00;
+    background-color: transparent;
+    border: 1px solid #004aad;
+    color: #004aad;
 }
 
 /* ===================== Map Container ===================== */
@@ -467,3 +482,29 @@ input.prefilled:focus, textarea.prefilled:focus {
         display: block;
     }
 }
+
+.job-badge {
+    background: #004aad; /* default (safe / far from deadline) */
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Urgent zone */
+.job-badge[data-days="3"],
+.job-badge[data-days="2"],
+.job-badge[data-days="1"],
+.job-badge[data-days="0"] {
+    background: #b30000;
+}
+.job-badge[data-days="1"],
+.job-badge[data-days="0"] {
+    animation: pulse 1.4s infinite;
+}
+
+@keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
