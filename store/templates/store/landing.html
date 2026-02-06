@@ -76,193 +76,84 @@
     <div class="container">
         <h2>Events & Our Journey</h2>
 
-        <!-- ====== ONGOING EVENTS ====== -->
-        {% if ongoing_events %}
-        {% for event in ongoing_events %}
-        <div class="event-row ongoing-event">
+        {% for event in current_events %}
+        <div class="event-row {% if event.is_past %}past-event{% endif %}">
 
-            <!-- Image with zoom -->
+            <!-- ===================== IMAGE / THUMBNAIL ===================== -->
             <div class="event-image">
-                <a href="#img-zoom-{{ event.id }}">
-                    {% if event.thumbnail %}
-                    <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
-                    {% else %}
-                    <img src="{% static 'images/default-event.jpg' %}" alt="Default event image">
-                    {% endif %}
-
-                    <!-- DATE BADGE -->
-                    <span class="event-date-badge">
-                        {{ event.start_date|date:"M d" }}
-                        {% if event.end_date and event.end_date != event.start_date %}
-                        – {{ event.end_date|date:"M d, Y" }}
-                        {% endif %}
-                    </span>
-                </a>
-            </div>
-
-
-            <!-- Event info -->
-            <div class="event-info">
-                <h3>{{ event.title }}</h3>
-                <p class="event-date">
-                    {{ event.start_date|date:"M d" }}
-                    {% if event.end_date %}
-                    – {{ event.end_date|date:"M d, Y" }}
-                    {% else %}
-                    , {{ event.start_date|date:"Y" }}
-                    {% endif %}
-                </p>
-                <p>{{ event.description|truncatewords:28 }}</p>
-
-                <div class="event-actions">
-                    {% if event.rsvp_enabled %}
-                    <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
-                        class="btn-primary">
-                        Request Service
-                    </a>
-
-
-                    {% endif %}
-                    <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Zoom overlay -->
-        <div id="img-zoom-{{ event.id }}" class="img-zoom-overlay">
-            {% if event.thumbnail %}
-            <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
-            {% else %}
-            <img src="{% static 'images/default-event.jpg' %}" alt="Default event image">
-            {% endif %}
-        </div>
-        {% endfor %}
-        {% endif %}
-
-        <!-- ====== UPCOMING EVENTS ====== -->
-        {% if upcoming_events %}
-        {% for event in upcoming_events %}
-        <div class="event-row upcoming-event">
-
-            <!-- Image with zoom -->
-            <div class="event-image">
-                <a href="#img-zoom-{{ event.id }}">
-                    {% if event.thumbnail %}
-                    <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
-                    {% else %}
-                    <img src="{% static 'images/default-event.jpg' %}" alt="Default event image">
-                    {% endif %}
-
-                    <!-- DATE BADGE -->
-                    <span class="event-date-badge">
-                        {{ event.start_date|date:"M d" }}
-                        {% if event.end_date and event.end_date != event.start_date %}
-                        – {{ event.end_date|date:"M d, Y" }}
-                        {% endif %}
-                    </span>
-                </a>
-            </div>
-
-
-            <!-- Event info -->
-            <div class="event-info">
-                <h3>{{ event.title }}</h3>
-                <p class="event-date">
-                    {{ event.start_date|date:"M d" }}
-                    {% if event.end_date %}
-                    – {{ event.end_date|date:"M d, Y" }}
-                    {% else %}
-                    , {{ event.start_date|date:"Y" }}
-                    {% endif %}
-                </p>
-                <p>{{ event.description|truncatewords:28 }}</p>
-
-                <div class="event-actions">
-                    {% if event.rsvp_enabled %}
-                    <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
-                        class="btn-primary">
-                        Request Service
-                    </a>
-
-                    {% endif %}
-                    <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Zoom overlay -->
-        <div id="img-zoom-{{ event.id }}" class="img-zoom-overlay">
-            {% if event.thumbnail %}
-            <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
-            {% else %}
-            <img src="{% static 'images/default-event.jpg' %}" alt="Default event image">
-            {% endif %}
-        </div>
-        {% endfor %}
-        {% else %}
-        <p class="no-events-msg">No upcoming events at the moment.</p> <br>
-        {% endif %}
-
-        <!-- ====== PAST EVENTS TOGGLE ====== -->
-        {% if past_events %}
-        <button id="show-past-btn" class="btn-secondary">View Past Events</button>
-
-        <div id="past-events" style="display: none; margin-top: 1rem;">
-            {% for event in past_events %}
-            <div class="event-row past-event">
-
-                <!-- Image with zoom -->
-                <div class="event-image">
-                    <a href="#img-zoom-{{ event.id }}">
-                        {% if event.thumbnail %}
-                        <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
-                        {% else %}
-                        <img src="{% static 'images/default-event.jpg' %}" alt="Default event image">
-                        {% endif %}
-
-                        <!-- DATE BADGE -->
-                        <span class="event-date-badge">
-                            {{ event.start_date|date:"M d" }}
-                            {% if event.end_date and event.end_date != event.start_date %}
-                            – {{ event.end_date|date:"M d, Y" }}
-                            {% endif %}
-                        </span>
-                    </a>
-                </div>
-
-
-                <!-- Event info -->
-                <div class="event-info">
-                    <h3>{{ event.title }}</h3>
-                    <p class="event-date">
-                        {{ event.start_date|date:"M d" }} – {{ event.end_date|date:"M d, Y" }}
-                    </p> <br>
-                    <p>{{ event.description|truncatewords:28 }}</p>
-                    <div class="event-actions">
-                        <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a> <br>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Zoom overlay for past event -->
-            <div id="img-zoom-{{ event.id }}" class="img-zoom-overlay">
                 {% if event.thumbnail %}
-                <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
+                <a href="#img-zoom-{{ event.id }}">
+                    <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
+                </a>
                 {% else %}
-                <img src="{% static 'images/default-event.jpg' %}" alt="Default event image">
+                <div class="placeholder-image">
+                    <span>📅 No Image</span>
+                </div>
                 {% endif %}
+
+                <!-- ===================== DATE / LOCATION / COST BADGE ===================== -->
+                <div class="event-date-badge">
+                    <div class="event-date">
+                        {{ event.start_date|date:"M d, Y" }}
+                        {% if event.end_date and event.end_date != event.start_date %}
+                        – {{ event.end_date|date:"M d, Y" }}
+                        {% endif %}
+                    </div>
+
+                    {% if event.location %}
+                    <div class="event-location">📍 {{ event.location }}</div>
+                    {% endif %}
+
+                    {% if event.cost %}
+                    <div class="event-cost">💰 KES {{ event.cost }}</div>
+                    {% else %}
+                    <div class="event-cost">💰 Free</div>
+                    {% endif %}
+
+                    {% if event.category %}
+                    <div class="event-category">🏷️ {{ event.category.title }}</div>
+                    {% endif %}
+                </div>
             </div>
-            {% endfor %}
+
+            <!-- ===================== EVENT INFO ===================== -->
+            <div class="event-info">
+                <h3>{{ event.title }}</h3>
+                <p class="event-date">
+                    {{ event.start_date|date:"M d" }}
+                    {% if event.end_date %} – {{ event.end_date|date:"M d, Y" }}{% endif %}
+                </p>
+                <p>{{ event.description|truncatewords:28 }}</p>
+
+                <div class="event-actions">
+                    {% if not event.is_past and event.rsvp_enabled %}
+                    <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-primary">
+                        Request Service
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a>
+                </div>
+            </div>
         </div>
-        {% endif %}
+
+        <!-- ===================== ZOOM OVERLAY ===================== -->
+        <div id="img-zoom-{{ event.id }}" class="img-zoom-overlay">
+            {% if event.thumbnail %}
+            <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
+            {% else %}
+            <div class="placeholder-image">
+                <span>No Image Available</span>
+            </div>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p class="no-events-msg">No ongoing or upcoming events at the moment.</p>
+        {% endfor %}
 
         <!-- ====== VIEW ALL EVENTS BUTTON ====== -->
-        <a href="{% url 'events_list'%}" class="btn-secondary-1">View all events</a>
-
+        <a href="{% url 'events_list' %}" class="btn-secondary-1">View All Events</a>
     </div>
 </section>
+
 
 {% endblock %}

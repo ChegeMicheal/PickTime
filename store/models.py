@@ -31,8 +31,6 @@ class Service(models.Model):
     def __str__(self):
         return self.title
 
-
-
 # =========================
 # EVENTS
 # =========================
@@ -47,6 +45,46 @@ class Event(models.Model):
         upload_to="events/thumbnails/",
         blank=True,
         null=True
+    )
+
+    # 🔽 NEW FILE FIELDS
+    training_pdf = models.FileField(
+        upload_to="events/training/",
+        blank=True,
+        null=True,
+        help_text="Upload training materials (PDF)"
+    )
+
+    nomination_form = models.FileField(
+        upload_to="events/nominations/",
+        blank=True,
+        null=True,
+        help_text="Upload nomination form (PDF/DOC)"
+    )
+
+    # 🔽 NEW FIELDS
+    location = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        help_text="Venue or location of the event"
+    )
+
+    cost = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        help_text="Cost of attending the event (leave blank if free)"
+    )
+
+    category = models.ForeignKey(
+        "Service",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="events",
+        help_text="Category of the event (link to Service)"
     )
 
     featured = models.BooleanField(default=False)
@@ -86,6 +124,7 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse("event_detail", args=[self.id])
+
 
 
 # =========================

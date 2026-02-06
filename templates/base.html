@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Picktime Consulting{% endblock %}</title>
 
+    <link rel="icon" href="{% static 'images/logo.jpg' %}" sizes="16x16" type="image/jpg">
+    <link rel="icon" href="{% static 'images/logo.jpg' %}" sizes="32x32" type="image/jpg">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-
 </head>
 
 <body>
@@ -23,15 +24,11 @@
             </div>
 
             <nav class="site-nav" id="site-nav">
-                <a href="{% url 'landing' %}"><i class="fas fa-home"></i> &nbsp;&nbsp;Home</a>
-                <a href="{% url 'services' %}"><i class="fa-brands fa-servicestack"></i>&nbsp;&nbsp;Services</a>
-                <a href="{% url 'events_list' %}"><i class="fa fa-calendar"
-                        aria-hidden="true"></i>&nbsp;&nbsp;Events</a>
-                <a href="{% url 'jobs:list' %}">
-                    <i class="fa-solid fa-bullhorn"></i>&nbsp;&nbsp;Careers
-                </a>
-                <a href="{% url 'contact' %}"><i class="fa fa-address-book"
-                        aria-hidden="true"></i>&nbsp;&nbsp;Contact</a>
+                <a href="{% url 'landing' %}"><i class="fas fa-home"></i> Home</a>
+                <a href="{% url 'services' %}"><i class="fa-brands fa-servicestack"></i> Services</a>
+                <a href="{% url 'events_list' %}"><i class="fa fa-calendar"></i> Events</a>
+                <a href="{% url 'jobs:list' %}"><i class="fa-solid fa-bullhorn"></i> Careers</a>
+                <a href="{% url 'contact' %}"><i class="fa fa-address-book"></i> Contact</a>
             </nav>
 
             <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
@@ -39,9 +36,9 @@
                 <span></span>
                 <span></span>
             </button>
-
         </div>
     </header>
+
     {% if messages %}
     <div class="flash-messages">
         {% for message in messages %}
@@ -61,7 +58,7 @@
     <!-- ================= FOOTER ================= -->
     <footer class="site-footer">
         <div class="container footer-container">
-            <p>&copy; {{ now|date:"Y" }} Picktime Consulting. All Rights Reserved.</p>
+            <p>&copy; {% now "Y" %} Picktime Consulting. All Rights Reserved.</p>
             <p>
                 Follow us:
                 <a href="#">LinkedIn</a> |
@@ -74,44 +71,23 @@
     <!-- ================= JS ================= -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Hamburger toggle
             const hamburger = document.getElementById('hamburger');
             const nav = document.getElementById('site-nav');
+            if (hamburger && nav) {
+                hamburger.addEventListener('click', function () {
+                    nav.classList.toggle('nav-active');
+                    hamburger.classList.toggle('open');
+                });
+            }
 
-            if (!hamburger || !nav) return;
-
-            hamburger.addEventListener('click', function () {
-                nav.classList.toggle('nav-active');
-                hamburger.classList.toggle('open');
-            });
+            // Auto-remove flash messages after 5s
+            setTimeout(() => {
+                document.querySelectorAll('.flash-messages .alert')
+                    .forEach(alert => alert.remove());
+            }, 5000);
         });
     </script>
 
-    <script>
-        const pastBtn = document.getElementById('show-past-btn');
-        const pastEvents = document.getElementById('past-events');
-
-        if (pastBtn) {
-            pastBtn.addEventListener('click', () => {
-                if (pastEvents.style.display === "none") {
-                    pastEvents.style.display = "block";
-                    pastEvents.style.backgroundColor = "lightgray";
-                    pastBtn.textContent = "Hide Past Events";
-                } else {
-                    pastEvents.style.display = "none";
-                    pastBtn.textContent = "View Past Events";
-                }
-            });
-        }
-    </script>
-
-    <script>
-        setTimeout(() => {
-            document.querySelectorAll('.flash-messages .alert')
-                .forEach(alert => alert.remove());
-        }, 5000);
-    </script>
-
-
 </body>
-
 </html>

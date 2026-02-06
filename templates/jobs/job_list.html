@@ -24,7 +24,10 @@
                         <img src="{% static 'images/default-job.jpg' %}">
                         {% endif %}
 
-                        <span class="event-date-badge job-badge" data-days="{{ job.days_remaining }}">
+                    </a>
+                    <!-- ===================== DATE / LOCATION / COST BADGE ===================== -->
+                    <div class="event-date-badge">
+                        <div class="event-date">
                             {% if job.days_remaining > 1 %}
                             {{ job.days_remaining }} days left
                             {% elif job.days_remaining == 1 %}
@@ -32,8 +35,8 @@
                             {% else %}
                             Closing today
                             {% endif %}
-                        </span>
-                    </a>
+                        </div>
+                    </div>
                 </div>
 
 

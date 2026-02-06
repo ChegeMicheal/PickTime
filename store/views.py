@@ -10,8 +10,15 @@ from .forms import LoginForm, ForgotPasswordForm, SignupForm, ContactForm
 from .models import Service, Event
 from store.models import ContactSubmission
 
+from django.utils import timezone
+from datetime import date, datetime, timedelta
+
+import calendar
+
+
 
 import random, string
+
 
 # -------------------------
 # SIGNUP
@@ -34,7 +41,7 @@ def landing(request):
     services = Service.objects.filter(parent__isnull=True, is_active=True)
     
     today = timezone.now().date()
-    two_months_later = today + timedelta(days=60)
+    one_month_later = today + timedelta(days=30)
 
     # Ongoing events: start_date <= today <= end_date
     ongoing_events = Event.objects.filter(
@@ -45,15 +52,19 @@ def landing(request):
     # Upcoming events: start_date > today
     upcoming_events = Event.objects.filter(
         start_date__gt=today,
-        start_date__lte=two_months_later
+        start_date__lte=one_month_later
     ).order_by("start_date")
 
     # Past events: end_date < today
     past_events = Event.objects.filter(
         end_date__lt=today
     ).order_by("-start_date")  # show most recent past first
+    
+     # Merge ongoing + upcoming for template loop
+    current_events = ongoing_events | upcoming_events  # This is allowed in Python / QuerySets
 
     context = {
+        "current_events": current_events.order_by("start_date"),
         "services": services,
         "ongoing_events": ongoing_events,
         "upcoming_events": upcoming_events,
@@ -147,29 +158,41 @@ def service_detail(request, slug):
 def events_list(request):
     today = timezone.now().date()
 
-    # Ongoing events: start_date <= today <= end_date
-    ongoing_events = Event.objects.filter(
-        start_date__lte=today,
-        end_date__gte=today
-    ).order_by("start_date")
+    # Get year and month from GET params for navigation
+    year = request.GET.get("year")
+    month = request.GET.get("month")
 
-    # Upcoming events: start_date > today
-    upcoming_events = Event.objects.filter(
-        start_date__gt=today
-    ).order_by("start_date")
+    if year and month:
+        try:
+            year = int(year)
+            month = int(month)
+            first_day = date(year, month, 1)
+        except ValueError:
+            first_day = today.replace(day=1)
+    else:
+        first_day = today.replace(day=1)
 
-    # Past events: end_date < today
-    past_events = Event.objects.filter(
-        end_date__lt=today
-    ).order_by("-start_date")  # show most recent past first
+    # Last day of the month
+    if first_day.month == 12:
+        last_day = date(first_day.year + 1, 1, 1) - timedelta(days=1)
+    else:
+        last_day = date(first_day.year, first_day.month + 1, 1) - timedelta(days=1)
+
+    # Filter all events whose start_date falls within the month
+    events = Event.objects.filter(
+        start_date__gte=first_day,
+        start_date__lte=last_day
+    ).order_by("start_date")
 
     context = {
-        "services": services,
-        "ongoing_events": ongoing_events,
-        "upcoming_events": upcoming_events,
-        "past_events": past_events,
+        "events": events,
+        "current_year": first_day.year,
+        "current_month": first_day.month,
+        "today": timezone.now().date(),
     }
+
     return render(request, "store/events_list.html", context)
+
 
 
 # -------------------------
@@ -182,9 +205,26 @@ def event_detail(request, event_id):
 # -------------------------
 # SERVICE DETAIL PAGE
 # -------------------------
+# -------------------------
+# SERVICE DETAIL PAGE
+# -------------------------
+from django.utils.timezone import now
+
 def service_detail(request, service_id):
     service = get_object_or_404(Service, id=service_id)
-    return render(request, 'store/service_detail.html', {'service': service})
+    
+    # Get related events
+    related_events = Event.objects.filter(category=service).order_by('start_date')
+    
+    today = now().date()
+    
+    return render(request, 'store/service_detail.html', {
+        "service": service,
+        "related_events": related_events,
+        "today": today,  # for past/future logic
+    })
+
+
 
 # -------------------------
 # RSVP PAGES

@@ -56,40 +56,27 @@ class EventPhotoInline(admin.TabularInline):
 # =========================
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = (
-        "title",
-        "start_date",
-        "end_date",
-        "status_display",
-        "featured",
-        "rsvp_enabled",
-    )
-    list_filter = ("featured", "rsvp_enabled")
-    search_fields = ("title",)
-
-    inlines = [EventPhotoInline]
+    list_display = ("title", "category", "start_date", "end_date", "location", "cost", "status", "featured")
+    list_filter = ("featured", "rsvp_enabled", "start_date", "category")
+    search_fields = ("title", "location", "category__title")
 
     fieldsets = (
-        ("Event Info", {
-            "fields": ("title", "description", "thumbnail")
+        ("Event Details", {
+            "fields": ("title", "description", "thumbnail", "category")
         }),
         ("Schedule", {
             "fields": ("start_date", "end_date")
         }),
-        ("Visibility & Actions", {
+        ("Location & Cost", {
+            "fields": ("location", "cost")
+        }),
+        ("Documents", {
+            "fields": ("training_pdf", "nomination_form")
+        }),
+        ("Settings", {
             "fields": ("featured", "rsvp_enabled")
         }),
     )
-
-    def status_display(self, obj):
-        return obj.get_status_display()
-
-    status_display.short_description = "Status"
-
-    class Media:
-        css = {
-            "all": ("admin/css/custom_admin.css",)
-        }
 
 
 # =========================

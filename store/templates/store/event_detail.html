@@ -7,46 +7,55 @@
 <section class="event-detail">
     <div class="container">
 
-        <!-- EVENT ROW -->
-        <div class="event-row">
+        <!-- ===================== EVENT ROW ===================== -->
+        <div class="event-row {% if event.is_past %}past-events{% endif %}">
 
-            <!-- IMAGE (click to zoom) -->
+            <!-- ===================== IMAGE / THUMBNAIL ===================== -->
             <div class="event-image">
-                <a href="#img-zoom-main">
-                    {% if event.thumbnail %}
+                {% if event.thumbnail %}
+                <a href="#img-zoom-{{ event.id }}">
                     <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
-                    {% else %}
-                    <img src="{% static 'images/default-event.jpg' %}" alt="Default event image">
-                    {% endif %}
+                </a>
+                {% else %}
+                <div class="placeholder-image">
+                    <span>📅 No Image</span>
+                </div>
+                {% endif %}
 
-                    <!-- DATE BADGE -->
-                    <span class="event-date-badge">
+                <!-- ===================== DATE / LOCATION / COST BADGE ===================== -->
+                <div class="event-date-badge">
+                    <div class="event-date">
                         {{ event.start_date|date:"M d" }}
                         {% if event.end_date and event.end_date != event.start_date %}
                         – {{ event.end_date|date:"M d, Y" }}
+                        {% else %}
+                        , {{ event.start_date|date:"Y" }}
                         {% endif %}
-                    </span>
-                </a>
+                    </div>
+
+                    {% if event.location %}
+                    <div class="event-location">
+                        📍 {{ event.location }}
+                    </div>
+                    {% endif %}
+
+                    {% if event.cost %}
+                    <div class="event-cost">
+                        💰 KES {{ event.cost }}
+                    </div>
+                    {% else %}
+                    <div class="event-cost">
+                        💰 Free
+                    </div>
+                    {% endif %}
+                </div>
             </div>
 
-
-            <!-- TEXT & INFO -->
+            <!-- ===================== EVENT INFO ===================== -->
             <div class="event-info">
                 <h1>{{ event.title }}</h1>
 
-                <p class="event-date">
-                    📅 {{ event.start_date|date:"F j" }}
-                    {% if event.end_date and event.end_date != event.start_date %}
-                    – {{ event.end_date|date:"F j, Y" }}
-                    {% else %}
-                    , {{ event.start_date|date:"Y" }}
-                    {% endif %}
-
-                    {% if event.location %}
-                    · 📍 {{ event.location }}
-                    {% endif %}
-                </p>
-
+                <!-- STATUS -->
                 {% if event.is_future %}
                 <span class="status upcoming">Upcoming</span>
                 {% elif event.is_past %}
@@ -55,30 +64,46 @@
                 <span class="status ongoing">Ongoing</span>
                 {% endif %}
 
+                <!-- CATEGORY -->
+                {% if event.category %}
+                <p class="event-category">Category: {{ event.category.title }}</p>
+                {% endif %}
+
+                <!-- DESCRIPTION -->
                 <div class="event-description">
                     {{ event.description|linebreaks }}
                 </div>
 
-                <!-- RSVP + VIEW -->
+                <!-- ===================== ACTIONS ===================== -->
                 <div class="event-actions">
+
                     {% if event.is_future and event.rsvp_enabled %}
-                    <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
-                        class="btn-primary">
+                    <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-primary">
                         Request Service
                     </a>
-
-
                     {% endif %}
+
+                    {% if event.training_pdf %}
+                    <a href="{{ event.training_pdf.url }}" download class="btn-secondary-1">
+                        📘 Download Training PDF
+                    </a>
+                    {% endif %}
+
+                    {% if event.nomination_form %}
+                    <a href="{{ event.nomination_form.url }}" download class="btn-secondary-2">
+                        📝 Download Nomination Form
+                    </a>
+                    {% endif %}
+
                 </div>
             </div>
 
         </div>
 
-        <!-- ===================== GALLERY ===================== -->
+        <!-- ===================== EVENT GALLERY ===================== -->
         {% if event.photos.exists %}
         <div class="event-photos">
             <h2>Event Gallery</h2>
-
             <div class="photo-grid">
                 {% for photo in event.photos.all %}
                 <div class="photo-card">
@@ -96,17 +121,17 @@
         </div>
         {% endif %}
 
-
     </div>
 </section>
 
-<!-- MAIN IMAGE ZOOM -->
+<!-- ===================== MAIN IMAGE ZOOM ===================== -->
 <div id="img-zoom-main" class="img-zoom-overlay">
     {% if event.thumbnail %}
     <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
     {% else %}
-    <img src="{% static 'images/default-event.jpg' %}" alt="Event image">
+    <div class="placeholder-image">
+        <span>No Image Available</span>
+    </div>
     {% endif %}
 </div>
-
 {% endblock %}

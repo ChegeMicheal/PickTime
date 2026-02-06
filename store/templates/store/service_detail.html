@@ -35,7 +35,7 @@
                         <li>
                             <strong>{{ mini.title }}</strong>
                             {% if mini.short_description %}
-                           <p style="margin-left: 30px;">{{ mini.short_description }}</p>
+                            <p style="margin-left: 30px;">{{ mini.short_description }}</p>
                             {% endif %}
                         </li>
                         {% endfor %}
@@ -54,7 +54,69 @@
 
         </div>
 
-        <!-- ===================== GALLERY ===================== -->
+        <!-- ===================== RELATED EVENTS ===================== -->
+        {% if related_events %}
+        <section class="related-events">
+            <h2>Related Events</h2>
+            <div class="events-list">
+                {% for event in related_events %}
+                <div class="event-row {% if event.end_date < today %}past-events{% endif %}">
+
+                    <!-- Image / Thumbnail -->
+                    <div class="event-image">
+                        {% if event.thumbnail %}
+                        <a href="{% url 'event_detail' event.id %}">
+                            <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
+                        </a>
+                        {% else %}
+                        <div class="placeholder-image">
+                            <span>📅 No Image</span>
+                        </div>
+                        {% endif %}
+
+                        <!-- Date / Location / Cost Badge -->
+                        <div class="event-date-badge">
+                            <div class="event-date">
+                                {{ event.start_date|date:"M d" }}
+                                {% if event.end_date and event.end_date != event.start_date %}
+                                – {{ event.end_date|date:"M d, Y" }}
+                                {% endif %}
+                            </div>
+
+                            {% if event.location %}
+                            <div class="event-location">📍 {{ event.location }}</div>
+                            {% endif %}
+
+                            {% if event.cost %}
+                            <div class="event-cost">💰 KES {{ event.cost }}</div>
+                            {% else %}
+                            <div class="event-cost">💰 Free</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Event Info -->
+                    <div class="event-info">
+                        <h3>{{ event.title }}</h3>
+                        <p>{{ event.description|truncatewords:20 }}</p>
+
+                        <div class="event-actions">
+                            {% if event.start_date >= today and event.rsvp_enabled %}
+                            <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-primary">
+                                Request Service
+                            </a>
+                            {% endif %}
+                            <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- ===================== GALLERY (if any) ===================== -->
         {% if service.photos.exists %}
         <div class="event-photos">
             <h2>Service Gallery</h2>
