@@ -141,17 +141,32 @@ def services(request):
     services = Service.objects.filter(parent__isnull=True, is_active=True)
     return render(request, 'store/services.html', {"services": services})
 
+# -------------------------
+# SERVICE DETAIL PAGE
+# -------------------------
+from django.utils.timezone import now
 
-def service_detail(request, slug):
-    service = get_object_or_404(Service, slug=slug)
-    mini_services = service.mini_services.all()  # Fetch all mini-services
+def service_detail(request, service_id):
+    service = get_object_or_404(Service, id=service_id)
+    today = timezone.now().date()
+    one_month_later = today + timedelta(days=30)
+    
+    # Get related events
+    related_events = Event.objects.filter(category=service, start_date__gt=today,start_date__lte=one_month_later).order_by('start_date')
+        
+    previous_url = (
+        request.GET.get("next")
+        or request.META.get("HTTP_REFERER")
+    )
 
-    return render(request, "store/service_detail.html", {
-        "service": service,
-        "mini_services": mini_services
+    return render(request, 'store/service_detail.html', {
+        "service": service, 
+        "previous_url": previous_url,
+        "related_events": related_events,
+        "today": today,  # for past/future logic
     })
-
-
+    
+    
 # -------------------------
 # EVENTS PAGE
 # -------------------------
@@ -180,9 +195,9 @@ def events_list(request):
 
     # Filter all events whose start_date falls within the month
     events = Event.objects.filter(
-        start_date__gte=first_day,
-        start_date__lte=last_day
-    ).order_by("start_date")
+        start_date__lte=last_day,
+        end_date__gte=first_day,
+    ).order_by("start_date","end_date")
 
     context = {
         "events": events,
@@ -200,35 +215,19 @@ def events_list(request):
 # -------------------------
 def event_detail(request, event_id):
     event = get_object_or_404(Event, id=event_id)
-    return render(request, 'store/event_detail.html', {"event": event})
-
-# -------------------------
-# SERVICE DETAIL PAGE
-# -------------------------
-# -------------------------
-# SERVICE DETAIL PAGE
-# -------------------------
-from django.utils.timezone import now
-
-def service_detail(request, service_id):
-    service = get_object_or_404(Service, id=service_id)
     
-    # Get related events
-    related_events = Event.objects.filter(category=service).order_by('start_date')
-    
-    today = now().date()
-    
-    return render(request, 'store/service_detail.html', {
-        "service": service,
-        "related_events": related_events,
-        "today": today,  # for past/future logic
-    })
+    previous_url = (
+        request.GET.get("next")
+        or request.META.get("HTTP_REFERER")
+    )
 
+    return render(request,"store/event_detail.html",{"event": event,"previous_url": previous_url,})
 
 
 # -------------------------
 # RSVP PAGES
 # -------------------------
+
 def rsvp_event(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     return render(request, "store/rsvp.html", {"event": event})
@@ -250,7 +249,10 @@ def contact(request):
     prefill_service = request.GET.get('service', '')
 
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = ContactForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+
         if form.is_valid():
             submission = form.save()   # ✅ capture saved object
             

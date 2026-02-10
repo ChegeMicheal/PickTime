@@ -146,8 +146,9 @@ class EventPhoto(models.Model):
 # =========================
 # CONTACT FORM
 # =========================
-
+from .validators import validate_document_file
 import uuid
+
 
 class ContactSubmission(models.Model):
     full_name = models.CharField(max_length=150)
@@ -156,6 +157,16 @@ class ContactSubmission(models.Model):
     subject = models.CharField(max_length=150, blank=True, null=True)
     service = models.CharField(max_length=150, blank=True, null=True)
     message = models.TextField()
+
+    
+    attachment = models.FileField(
+        upload_to="contact_attachments/",
+        validators=[validate_document_file],
+        blank=True,
+        null=True
+    )
+
+
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -171,6 +182,10 @@ class ContactSubmission(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.full_name} - {self.subject or 'No Subject'}"
+    
 
 # REPLY MODEL
 # =========================

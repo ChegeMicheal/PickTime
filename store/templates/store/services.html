@@ -4,6 +4,7 @@
 {% block title %}Our Services | Picktime Consulting{% endblock %}
 
 {% block content %}
+{% include "partials/back_button.html" %}
 <!-- ===================== SERVICES ===================== -->
 <section id="services" class="services-section">
     <div class="container">
@@ -46,7 +47,7 @@
                         Learn More
                     </a>
                     <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
-                        class="btn-primary">
+                        class="btn-secondary">
                         Request Service
                     </a>
                 </div>

@@ -90,8 +90,19 @@ class EventPhotoAdmin(admin.ModelAdmin):
 
 @admin.register(ContactSubmission)
 class ContactSubmissionAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'email', 'phone', 'subject', 'created_at', 'reply_link')
-    readonly_fields = ('full_name', 'email', 'phone', 'subject', 'message', 'created_at')
+    list_display = ('full_name', 'email', 'phone', 'subject', 'created_at', 'reply_link', 'attachment_link')
+    readonly_fields = ('full_name', 'email', 'phone', 'subject', 'message', 'created_at', 'attachment')
+    
+    def attachment_link(self, obj):
+        if obj.attachment:
+            return format_html(
+                '<a href="{}" target="_blank">Download</a>',
+                obj.attachment.url
+            )
+        return "—"
+
+    attachment_link.short_description = "Attachment"
+
     
     # Reply button in list
     def reply_link(self, obj):

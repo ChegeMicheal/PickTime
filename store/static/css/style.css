@@ -1,12 +1,23 @@
-/* RESET */
-* { box-sizing: border-box; margin:0; padding:0; }
-body { font-family: Arial, sans-serif; color:#333; }
+/* ===================== RESET ===================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-/* CONTAINER */
-.container { max-width:1200px; margin:auto; padding:1rem; }
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+}
 
-/* ================= HEADER ================= */
+/* ===================== CONTAINER ===================== */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 1rem;
+}
 
+/* ===================== HEADER ===================== */
 .site-header {
     background: #004aad;
     position: sticky;
@@ -25,11 +36,12 @@ body { font-family: Arial, sans-serif; color:#333; }
     height: 36px;
 }
 
-/* NAV */
+/* ===================== NAV ===================== */
 .site-nav {
     display: flex;
     gap: 1.2rem;
 }
+
 .site-nav a {
     color: #fff;
     font-weight: 600;
@@ -40,14 +52,10 @@ body { font-family: Arial, sans-serif; color:#333; }
 .site-nav a:hover {
     color: #004aad;
     background: #fff;
-    font-weight: 600;
     text-decoration: none;
 }
 
-
-
-/* ================= HAMBURGER ================= */
-
+/* ===================== HAMBURGER ===================== */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -64,7 +72,6 @@ body { font-family: Arial, sans-serif; color:#333; }
     transition: 0.3s ease;
 }
 
-/* X animation */
 .hamburger.open span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
 }
@@ -75,8 +82,7 @@ body { font-family: Arial, sans-serif; color:#333; }
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* ================= FOOTER ================= */
-
+/* ===================== FOOTER ===================== */
 .site-footer {
     background: grey;
     padding: 2rem 0;
@@ -88,10 +94,8 @@ body { font-family: Arial, sans-serif; color:#333; }
     font-size: 0.9rem;
 }
 
-/* ================= MOBILE ================= */
-
+/* ===================== MOBILE ===================== */
 @media (max-width: 768px) {
-
     .hamburger {
         display: flex;
     }
@@ -108,162 +112,95 @@ body { font-family: Arial, sans-serif; color:#333; }
         text-align: center;
     }
 
-
     .site-nav.nav-active {
         display: flex;
     }
 }
 
-/* HERO */
+/* ===================== HERO ===================== */
 .hero {
     background: #f0f4ff;
     text-align: center;
 }
 
-.hero h1 { font-size:2.8rem; color:#004aad; }
-
-/* BUTTONS */
-.btn-primary { background:#004aad; color:#fff; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
-.btn-secondary { border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
-.btn-secondary-1 { background:transparent; color: #004aad; border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
-
-.btn-secondary-2 { background:#004aad; color: white; border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
-.btn-secondary-2:hover { background:transparent; color: #004aad; border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
-
-.btn-primary:hover { background:transparent; color:#004aad; border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
-.btn-secondary:hover { border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; background: lightgray; }
-.btn-secondary-1:hover { background:#004aad; color: white; border:1px solid #004aad; padding:.7rem 1.4rem; border-radius:6px; text-decoration: none; }
-
-/* EVENTS */
-.event-row {
-    display:flex;
-    gap:2rem;
-    margin-bottom:2.5rem;
-    align-items:center;
+.hero h1 {
+    font-size: 2.8rem;
+    color: #004aad;
 }
 
-.event-image {
-    width:320px;
-    flex-shrink:0;
-    border-radius:12px;
-    overflow:hidden;
-}
-
-.event-image img {
-    width:100%;
-    height:220px;
-    object-fit:cover;
-    cursor: zoom-in; 
-}
-
-.event-info h3,
-.event-info h1 { color:#004aad; margin-bottom:.5rem; }
-
-.event-date { font-size:.9rem; color:#666; margin-bottom:.8rem; }
-
-.event-actions { margin-top:1rem; display:flex; gap:1rem; }
-
-/* IMAGE ZOOM */
-#img-zoom {
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.85);
-    display:none;
-    justify-content:center;
-    align-items:center;
-}
-#img-zoom img { max-width:90%; max-height:90%; }
-#img-zoom:target { display:flex; }
-
-
-
-/* MOBILE */
-@media (max-width:768px) {
-    .event-row { flex-direction:column; }
-    .event-image { width:100%; }
-}
-
-/* ===================== GALLERY IMAGES MATCH EVENT IMAGE ===================== */
-.photo-card {
-    width: 100%;
-    max-width: 420px;      /* same as main event image container */
-    max-height: 260px;     /* same as main event image container */
-    overflow: hidden;
-    border-radius: 14px;
-    margin: auto;
-}
-
-.photo-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;     /* same as main event image */
-    border-radius: 14px;
-    cursor: zoom-in;
-    transition: transform 0.3s ease;
-}
-
-.photo-card img:hover {
-    transform: scale(1.03);
-}
-
-/* Grid adjustment to avoid too many small images */
-.photo-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 1rem;
-}
-
-.img-zoom-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: none;
+/* ===================== UNIFORM BUTTONS ===================== */
+.btn-primary,
+.btn-secondary,
+.btn-secondary-1,
+.btn-secondary-2,
+.btn-secondary-1.upload-trigger {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    min-height: 44px;          /* uniform height */
+    font-size: 1rem;
+    line-height: 1.2;
+    padding: 0.75rem 1.4rem;   /* same padding for all */
+    border-radius: 6px;
+    text-decoration: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0;
+    font-weight: 600;
+    font-family: inherit;
+    width: auto;               /* ensures no extra stretching */
 }
 
-.img-zoom-overlay img {
-    max-width: 92%;
-    max-height: 92%;
-    object-fit: contain;
-    border-radius: 12px;
+/* Primary Button */
+.btn-primary {
+    background: #004aad;
+    color: #fff;
+    border: 1px solid #004aad;
+}
+.btn-primary:hover {
+    background: #fff;
+    color: #004aad;
 }
 
-.img-zoom-overlay:target {
-    display: flex;
+/* Secondary Button */
+.btn-secondary {
+    background: transparent;
+    color: #0044ad;
+    border: 1px solid #004aad;
+}
+.btn-secondary:hover {
+    background: lightgray;
 }
 
-.event-row.past-events {
-    opacity: 0.7;
-    background-color: #f8f8f8;
-    margin-bottom: 1rem;
-    pointer-events: auto; /* allow View Details clicks */
+/* Secondary-1 (including upload-trigger) */
+.btn-secondary-1 {
+    background: transparent;
+    color: #004aad;
+    border: 1px solid #004aad;
+}
+.btn-secondary-1:hover {
+    background: #004aad;
+    color: #fff;
 }
 
-.event-row.past-events .btn-primary {
-    display: none; /* hide Request Service button */
+/* Secondary-2 */
+.btn-secondary-2 {
+    background: #004aad;
+    color: #fff;
+    border: 1px solid #004aad;
+}
+.btn-secondary-2:hover {
+    background: transparent;
+    color: #004aad;
 }
 
-.event-row.past-events .btn-secondary {
-    opacity: 1; /* keep View Details visible */
+/* Prevent flex stretching in form fields */
+.form-field button {
+    align-self: flex-start;
 }
 
-
-
-.event-image {
-    position: relative; /* to allow absolute positioning of date badge */
-    overflow: hidden;
-    border-radius: 12px;
-}
-
-
-
-.upcoming-event .event-date-badge { background: #1b7f3b; }  /* green */
-.ongoing-event .event-date-badge   { background: #b35c00; }  /* orange */
-.past-event .event-date-badge      { background: #6b7280; }  /* gray */
-
+/* ===================== EVENTS ===================== */
 .event-row {
     display: flex;
     gap: 1.2rem;
@@ -280,166 +217,321 @@ body { font-family: Arial, sans-serif; color:#333; }
     box-shadow: 0 12px 24px rgba(0,0,0,0.12);
 }
 
+.event-image {
+    width: 320px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.event-image img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    cursor: zoom-in;
+}
+
+.event-info h1, .event-info h3 {
+    color: #004aad;
+    margin-bottom: 0.5rem;
+}
+
 .event-info .event-date {
     font-size: 0.85rem;
     color: #6b7280;
     margin-bottom: 0.4rem;
 }
 
-/* Floating map button */
-.floating-map-btn {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    z-index: 5;
-    padding: 0.6rem 1.2rem;
-    background: #004aad;
-    color: #fff;
-    border-radius: 6px;
-    font-weight: bold;
-    text-decoration: none;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-}
-
-.floating-map-btn:hover {
-    background: #3989f1;
-}
-
-/* Contact Details */
-.contact-details p {
-    margin-bottom: 0.8rem;
-    font-size: 1rem;
-}
-
-.contact-form-section {
-    background: #fafafa;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-/* ===================== Contact Form Styles ===================== */
-.contact-section {
-    background-color: #f9f9f9; /* Light background for contrast */
-    font-family: 'Inter', sans-serif;
-}
-
-.contact-section h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #333;
-}
-
-.contact-container {
+.event-actions {
+    margin-top: 1rem;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 1rem;
 }
 
-.contact-form, .contact-map {
-    flex: 1 1 48%;
-    min-width: 300px;
+/* IMAGE ZOOM */
+#img-zoom, .img-zoom-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
-/* ===================== Form Container ===================== */
-.contact-form {
-    padding-top: 1rem;
+#img-zoom img, .img-zoom-overlay img {
+    max-width: 92%;
+    max-height: 92%;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+#img-zoom:target, .img-zoom-overlay:target {
+    display: flex;
+}
+
+/* ===================== PAST EVENTS ===================== */
+.event-row.past-events {
+    opacity: 0.75;
+    background-color: #f8f8f8;
+}
+
+.event-row.past-events .btn-primary {
+    display: none;
+}
+
+/* ===================== EVENT BADGES ===================== */
+.upcoming-event .event-date-badge { background: #1b7f3b; }
+.ongoing-event .event-date-badge   { background: #b35c00; }
+.past-event .event-date-badge      { background: #6b7280; }
+
+.event-date-badge {
     background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    border-radius: 1rem;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-}
-
-/* ===================== Form Fields ===================== */
-.contact-form label {
-    display: block;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    color: #555;
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid #ddd;
-    border-radius: 0.75rem;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    border-color: #ff6600; /* your orange accent */
-    outline: none;
-    box-shadow: 0 0 8px rgba(255,102,0,0.2);
-}
-
-/* ===================== Textarea ===================== */
-.contact-form textarea {
-    resize: vertical;
-    min-height: 150px;
-}
-
-/* ===================== Buttons ===================== */
-.contact-form .btn-primary {
-    background-color: #004aad; /* your accent color */
-    align-self: center; 
-    color: #fff;
-    display: block;        
-    margin: 0px 25%;     
-    width: 50%;         
-    text-align: center;   
-    border: none;
-    border-radius: 0.75rem;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.contact-form .btn-primary:hover {
-    background-color: transparent;
+    padding: 0.5rem;
+    border-radius: 5px;
     border: 1px solid #004aad;
-    color: #004aad;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
 }
 
-/* ===================== Map Container ===================== */
-.contact-map iframe {
+.event-date-badge .event-cost { color: black; }
+.event-date-badge .event-location { margin-top: 0.25rem; color: #004aad; }
+.event-date-badge .event-date { font-weight: bold; color: red; }
+
+/* ===================== GALLERY ===================== */
+.photo-card {
+    width: 100%;
+    max-width: 420px;
+    max-height: 260px;
+    overflow: hidden;
+    border-radius: 14px;
+    margin: auto;
+}
+
+.photo-card img {
     width: 100%;
     height: 100%;
-    min-height: 400px;
-    border: none;
-    border-radius: 1rem;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    object-fit: cover;
+    border-radius: 14px;
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
 }
 
-/* ===================== Responsive ===================== */
-@media (max-width: 768px) {
-    .contact-container {
-        flex-direction: column;
-    }
-    
-    .contact-form, .contact-map {
-        flex: 1 1 100%;
-    }
+.photo-card img:hover {
+    transform: scale(1.03);
 }
 
-/* Highlight pre-filled fields */
-input.prefilled, textarea.prefilled {
-    background-color: #f0f4ff;   /* subtle light blue */
-    border: 2px solid #4a90e2;   /* accent border */
+.photo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.section-header {
+    text-align: center;
+    max-width: 700px;       /* keeps text from stretching too wide */
+}
+
+.section-header h2 {
+    color: #0044ad;         /* your primary color */
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.section-header p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-top: 0.5rem;
+}
+
+
+.contact-details {
+    background: #ffffff;             /* card background */
+    border-radius: 12px;             /* smooth rounded corners */
+    padding: 1.5rem 2rem;            /* more breathing room */
+    border: 1px solid #004aad;       /* accent border */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* soft shadow */
+    max-width: 500px;                /* optional: keep card narrow */
+    margin: 1rem auto;               /* center horizontally */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-details:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+}
+
+.contact-details p {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
     color: #333;
 }
 
-input.prefilled:focus, textarea.prefilled:focus {
-    outline: none;
-    border-color: #357ABD;
-    box-shadow: 0 0 5px rgba(53, 122, 189, 0.5);
+.contact-details p i {
+    color: #004aad;                 /* icon accent color */
+    margin-right: 0.5rem;
 }
 
+.contact-details a {
+    color: #004aad;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.contact-details a:hover {
+    text-decoration: underline;
+}
+
+
+/* ===================== CONTACT FORM ===================== */
+/* Wrapper centers everything */
+.contact-form-wrapper {
+    display: flex;
+    justify-content: center;    /* horizontal centering */
+    align-items: flex-start;    /* top alignment */
+    background: #f7f9ff;        /* subtle section background */
+}
+
+/* Form Card */
+.contact-form {
+    background: #fff;
+    border-radius: 16px;
+    max-width: 800px;
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #0044ad;
+    text-align: left;
+}
+
+/* Header inside form */
+.contact-form h2 {
+    color: #0044ad;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;         /* center the heading */
+}
+
+/* Paragraph under heading (optional) */
+.contact-form p {
+    text-align: center;
+    color: #555;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+/* Form fields */
+.contact-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Individual field wrapper */
+.form-field {
+    display: flex;
+    flex-direction: column;     /* label above input for modern look */
+    gap: 0.4rem;
+}
+
+.form-field label {
+    font-weight: 600;
+    color: #0044ad;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    border-radius: 6px;
+    border: 1px solid #78aff7;
+    padding: 0.65rem 0.8rem;
+    font-size: 0.95rem;
+    width: 100%;
+}
+
+/* Textarea */
+textarea.form-field {
+    min-height: 120px;
+}
+
+/* Buttons */
+.btn-primary {
+    background: #0044ad;
+    color: #fff;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #fff;
+    color: #0044ad;
+    border: 1px solid #0044ad;
+}
+
+.btn-secondary-1.upload-trigger {
+    width: fit-content;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid #0044ad;
+    background: transparent;
+    color: #0044ad;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary-1.upload-trigger:hover {
+    background: #0044ad;
+    color: #fff;
+}
+
+/* File wrapper */
+.file-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+#fileWrapper input {
+    width: 100%;
+}
+
+/* Success message */
+.success-message {
+    text-align: center;
+    margin-top: 1rem;
+    color: #28a745;
+    font-weight: 600;
+}
+
+.map-wrapper {
+    position: relative;
+    margin-top: 1.5rem;
+    width: 100%;
+    height: 400px;  /* match the previous iframe height */
+    border-radius: 12px; /* optional rounded corners */
+    overflow: hidden;    /* ensures iframe doesn't spill out */
+}
+
+.map-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+
+
+/* ===================== FLASH MESSAGES ===================== */
 .flash-messages {
     position: fixed;
     top: 90px;
@@ -460,10 +552,6 @@ input.prefilled:focus, textarea.prefilled:focus {
     align-items: center;
 }
 
-.alert-success {
-    background: #28a745;
-}
-
 .close-btn {
     background: none;
     border: none;
@@ -472,28 +560,19 @@ input.prefilled:focus, textarea.prefilled:focus {
     cursor: pointer;
     margin-left: 15px;
 }
-/* Hide mini services on mobile/small screens */
-.mini-services {
-    display: none;
-    margin-top: 10px;
-    padding-left: 20px;
-}
 
-/* Show mini services on desktop (min-width: 992px) */
-@media (min-width: 992px) {
-    .mini-services {
-        display: block;
-    }
-}
+/* ===================== MINI SERVICES ===================== */
+.mini-services { display: none; margin-top: 10px; padding-left: 20px; }
+@media (min-width: 992px) { .mini-services { display: block; } }
 
+/* ===================== JOB BADGES ===================== */
 .job-badge {
-    background: #004aad; /* default (safe / far from deadline) */
+    background: #004aad;
     color: #fff;
     font-size: 0.75rem;
     font-weight: 600;
 }
 
-/* Urgent zone */
 .job-badge[data-days="3"],
 .job-badge[data-days="2"],
 .job-badge[data-days="1"],
@@ -506,18 +585,18 @@ input.prefilled:focus, textarea.prefilled:focus {
 }
 
 @keyframes pulse {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.05); }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
 
-
+/* ===================== MONTH NAV ===================== */
 .month-nav {
     position: sticky;
-    top: 70px; /* adjust to your main navbar height */
+    top: 70px;
     z-index: 999;
     background: #fff;
-    padding: 0.75rem 0rem;
+    padding: 0.75rem 0;
     display: flex;
     gap: 0.75rem;
     align-items: center;
@@ -525,24 +604,12 @@ input.prefilled:focus, textarea.prefilled:focus {
     border-bottom: 1px solid #eee;
 }
 
-#currentMonthLabel {
-    font-size: 1.2rem;
-    font-weight: 600;
-}
+#currentMonthLabel { font-size: 1.2rem; font-weight: 600; }
+#monthPicker { padding: 0.4rem 0.6rem; cursor: pointer; }
 
-#monthPicker {
-    padding: 0.4rem 0.6rem;
-    cursor: pointer;
-}
+.no-events { text-align: center; margin-top: 2rem; font-style: italic; color: #777; }
 
-.no-events {
-    text-align: center;
-    margin-top: 2rem;
-    font-style: italic;
-    color: #777;
-}
-
-/* Keep placeholder images uniform */
+/* ===================== PLACEHOLDER IMAGES ===================== */
 .placeholder-image {
     width: 200px;
     height: 150px;
@@ -556,30 +623,25 @@ input.prefilled:focus, textarea.prefilled:focus {
     margin-bottom: 0.5rem;
 }
 
-.event-date-badge {
-    background-color: #fff;
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #004aad;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
+/* ===================== FLOATING BACK BUTTON ===================== */
+.floating-back-btn {
+    position: fixed;
+    top: 90px;
+    left: 20px;
+    z-index: 2000;
 }
 
-.event-date-badge .event-cost{
-    color: black;
+.floating-back-btn .btn {
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.event-date-badge .event-location {
-    margin-top: 0.25rem;
-    color: #004aad;
-}
-.event-date-badge .event-date{
-    font-weight: bold;
-    color: red;
+@media (max-width: 768px) {
+    .floating-back-btn { top: auto; bottom: 16px; left: 16px; }
 }
 
-.past-events {
-    opacity: 0.75;
-    background-color: #f8f8f8;
+/* ===================== MOBILE EVENTS ===================== */
+@media (max-width: 768px) {
+    .event-row { flex-direction: column; }
+    .event-image { width: 100%; }
 }
-

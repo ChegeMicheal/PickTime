@@ -27,7 +27,22 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'True'  # ensure boolean
 
-ALLOWED_HOSTS = ['*']
+
+NGROK_URL = os.getenv("NGROK_URL")
+
+CSRF_TRUSTED_ORIGINS = []
+
+if NGROK_URL:
+    CSRF_TRUSTED_ORIGINS.append(NGROK_URL)
+
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+]
+
+if NGROK_URL:
+    ALLOWED_HOSTS.append(NGROK_URL.replace("https://", "").replace("http://", ""))
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -130,3 +145,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "chegemichael003@gmail.com"
 EMAIL_HOST_PASSWORD = "xwssknxdlvsxhwyp"
 DEFAULT_FROM_EMAIL = "Picktime Consulting <chegemichael003@gmail.com>"
+
+# settings.py (for testing only)
+CSRF_COOKIE_SECURE = False
+

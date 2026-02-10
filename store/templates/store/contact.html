@@ -4,79 +4,133 @@
 {% block title %}Contact Us | Picktime Consulting{% endblock %}
 
 {% block content %}
-
+{% include "partials/back_button.html" %}
 <section class="contact-section">
     <div class="container contact-container">
         <!-- SECTION HEADER -->
-        <h2>Let's Connect</h2>
-        <p>We’re here to support your journey. Whether you have questions, need a consultation, or want to explore
-            collaboration, we’d love to hear from you.</p> <br>
+        <div class="section-header">
+            <h2>Let's Connect</h2>
+            <p>Have questions or want to collaborate? Our team is ready to assist and connect with you.</p>
+        </div>
+
 
         <!-- CONTACT INFO -->
         <div class="contact-details">
-            <p><strong>Office <i class="fa fa-phone" aria-hidden="true"></i>:</strong> +254 0117 249 150 / +254 722 962
+            <p><strong><i class="fa fa-phone" aria-hidden="true"></i>:</strong> +254 0117 249 150 / +254 722 962
                 280</p>
             <p><strong><i class="fa fa-envelope" aria-hidden="true"></i>:</strong> <a
                     href="mailto:info@picktimeconsulting.co.ke">info@picktimeconsulting.co.ke</a>
             </p>
-            <p><strong>Address:</strong> Maendeleo House, 6th Floor, Along Monrovia Street, Opposite Anniversary Towers,
+            <p><strong><i class="fa fa-address-card" aria-hidden="true"></i>:</strong> Maendeleo House, 6th Floor, Along
+                Monrovia Street, Opposite Anniversary Towers,
                 Nairobi, Kenya</p>
         </div>
 
-        <!-- Contact Form -->
-        <div class="contact-form">
-            <h2>Get in Touch</h2>
+        <div class="contact-form-wrapper">
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h2 style="color: #0044ad;">Get in Touch</h2>
 
-            <form action="{% url 'contact' %}" method="POST" class="contact-form">
-                {% csrf_token %}
+                <form action="{% url 'contact' %}" method="POST" enctype="multipart/form-data"
+                    class="contact-form-fields">
 
-                <label for="full_name">Full Name</label>
-                {{ form.full_name }}
+                    {% csrf_token %}
 
-                <label for="email">Email</label>
-                {{ form.email }}
+                    <!-- Upload nomination trigger -->
+                    <button type="button" class="btn-secondary-1 upload-trigger" id="uploadBtn">
+                        Upload Filled Nomination Form
+                    </button>
 
-                <label for="phone">Phone</label>
-                {{ form.phone }}
+                    <div id="fileWrapper" class="file-wrapper" style="display:none;">
+                        <label for="attachment" style="color: #0044ad;">Attach Nomination Document (PDF / DOCX)</label>
+                        <input type="file" name="attachment" id="attachment" accept=".pdf,.docx">
+                    </div>
 
-                <label for="subject">Subject</label>
-                {{ form.subject }}
+                    <div class="form-field"> <label for="full_name">Full Name</label>
+                        {{ form.full_name }}</div>
 
-                <label for="service">Service</label>
-                {{ form.service }}
+                    <div class="form-field"> <label for="email">Email</label>
+                        {{ form.email }}</div>
 
-                <label for="message">Message</label>
-                {{ form.message }}
+                    <div class="form-field"> <label for="phone">Phone</label>
+                        {{ form.phone }}</div>
 
-                <button type="submit" class="btn-primary" style="margin-left: 25%; margin-right: 25%;">Send
-                    Message</button>
-            </form>
+                    <div class="form-field"> <label for="subject">Subject</label>
+                        {{ form.subject }}</div>
 
-            {% if success_message %}
-            <p class="success-message">{{ success_message }}</p>
-            {% endif %}
+                    <div class="form-field"> <label for="service">Service</label>
+                        {{ form.service }}</div>
 
+                    <div class="form-field"> <label for="message">Message</label>
+                        {{ form.message }}</div>
+
+                    <button type="submit" class="btn-primary">Send
+                        Message</button>
+
+
+                </form>
+
+                {% if success_message %}
+                <p class="success-message">{{ success_message }}</p>
+                {% endif %}
+
+            </div>
         </div>
 
 
         <!-- MAP + BUTTON -->
-        <div class="map-wrapper" style="position:relative; margin-top:1.5rem;">
-
-            <!-- Get Directions Button -->
-            <a href="https://www.google.com/maps/dir/?api=1&destination=Maendeleo+House+Monrovia+Street+Nairobi+Kenya"
-                target="_blank" class="btn-secondary-1 floating-map-btn">
-                Get Directions &nbsp; &nbsp;<i class="fa-solid fa-location-arrow"></i>
-            </a>
-
+        <div class="map-wrapper">
             <!-- Embedded Map -->
             <iframe src="https://www.google.com/maps?q=Maendeleo+House+Monrovia+Street+Nairobi+Kenya&output=embed"
-                width="100%" height="450" style="border:0;" allowfullscreen loading="lazy">
-            </iframe>
-
-
+                allowfullscreen loading="lazy"></iframe>
         </div>
 
+
     </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const uploadBtn = document.getElementById("uploadBtn");
+            const fileWrapper = document.getElementById("fileWrapper");
+            const subjectInput = document.getElementById("id_subject");
+            const fileInput = document.getElementById("attachment");
+
+            let isOpen = false;
+
+            uploadBtn.addEventListener("click", function () {
+                isOpen = !isOpen;
+
+                if (isOpen) {
+                    // Open upload
+                    fileWrapper.style.display = "block";
+                    subjectInput.value = "Nomination Form Submission";
+                    subjectInput.readOnly = true;
+                    subjectInput.classList.add("prefilled");
+
+
+                    uploadBtn.innerHTML = "❌ I don't have one";
+                    uploadBtn.classList.add("btn-danger");
+
+
+                } else {
+                    // Close upload
+                    fileWrapper.style.display = "none";
+                    fileInput.value = "";
+
+                    subjectInput.value = "";
+                    subjectInput.readOnly = false;
+                    subjectInput.classList.remove("prefilled");
+
+
+                    uploadBtn.innerHTML = 'Upload Filled Nomination Form';
+                    uploadBtn.classList.remove("btn-danger");
+                }
+            });
+        });
+    </script>
+
+
 </section>
 
 

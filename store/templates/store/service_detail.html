@@ -4,6 +4,7 @@
 {% block title %}{{ service.title }} | Picktime Consulting{% endblock %}
 
 {% block content %}
+{% include "partials/back_button.html" %}
 <section class="event-detail service-detail">
     <div class="container">
 
@@ -46,7 +47,7 @@
                 <!-- ACTION -->
                 <div class="event-actions" style="margin-top:1rem;">
                     <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
-                       class="btn-primary">
+                        class="btn-secondary">
                         Request Service
                     </a>
                 </div>
@@ -102,7 +103,8 @@
 
                         <div class="event-actions">
                             {% if event.start_date >= today and event.rsvp_enabled %}
-                            <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-primary">
+                            <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP"
+                                class="btn-secondary">
                                 Request Service
                             </a>
                             {% endif %}

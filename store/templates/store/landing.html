@@ -9,7 +9,7 @@
     <div class="container hero-content">
         <h1>{{ hero.title|default:"Empowering Kenyan Enterprises" }}</h1>
         <p>{{ hero.subtitle|default:"Partnering with organizations to unlock growth and impact." }}</p> <br>
-        <a href="#events" class="btn-primary">Explore Events</a> <br>
+        <a href="#events" class="btn-secondary">Explore Events</a> <br>
     </div>
 </section>
 <!-- ===================== SERVICES ===================== -->
@@ -54,7 +54,7 @@
                         Learn More
                     </a>
                     <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
-                        class="btn-primary">
+                        class="btn-secondary">
                         Request Service
                     </a>
                 </div>
@@ -110,9 +110,9 @@
                     <div class="event-cost">💰 Free</div>
                     {% endif %}
 
-                    {% if event.category %}
+                    <!-- {% if event.category %}
                     <div class="event-category">🏷️ {{ event.category.title }}</div>
-                    {% endif %}
+                    {% endif %} -->
                 </div>
             </div>
 
@@ -127,11 +127,11 @@
 
                 <div class="event-actions">
                     {% if not event.is_past and event.rsvp_enabled %}
-                    <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-primary">
+                    <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-secondary">
                         Request Service
                     </a>
                     {% endif %}
-                    <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a>
+                    <a href="{% url 'event_detail' event.id %}" class="btn-secondary-1">View Details</a>
                 </div>
             </div>
         </div>
@@ -151,6 +151,7 @@
         {% endfor %}
 
         <!-- ====== VIEW ALL EVENTS BUTTON ====== -->
+         <br>
         <a href="{% url 'events_list' %}" class="btn-secondary-1">View All Events</a>
     </div>
 </section>

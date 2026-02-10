@@ -4,6 +4,7 @@
 {% block title %}Careers | Picktime Consulting{% endblock %}
 
 {% block content %}
+{% include "partials/back_button.html" %}
 <!-- ===================== JOBS ===================== -->
 <section id="jobs" class="services-section">
     <div class="container">
@@ -47,12 +48,12 @@
                     <p>{{ job.short_description }}</p>
                     <div class="event-actions">
                         {% if job.description_file %}
-                        <a href="{{ job.description_file.url }}" download class="btn-secondary-1">
+                        <a href="{{ job.description_file.url }}" download class="btn-secondary">
                             Download JD
                         </a>
                         {% endif %}
                         {% if job.days_remaining >= 0 %}
-                        <a href="{{ job.apply_link }}" class="btn-primary">Apply Now</a>
+                        <a href="{{ job.apply_link }}" class="btn-secondary">Apply Now</a>
                         {% else %}
                         <button class="btn-disabled" disabled>Applications Closed</button>
                         {% endif %}

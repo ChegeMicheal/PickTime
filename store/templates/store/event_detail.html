@@ -4,6 +4,8 @@
 {% block title %}{{ event.title }} | Picktime Consulting{% endblock %}
 
 {% block content %}
+{% include "partials/back_button.html" %}
+
 <section class="event-detail">
     <div class="container">
 
@@ -77,12 +79,6 @@
                 <!-- ===================== ACTIONS ===================== -->
                 <div class="event-actions">
 
-                    {% if event.is_future and event.rsvp_enabled %}
-                    <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-primary">
-                        Request Service
-                    </a>
-                    {% endif %}
-
                     {% if event.training_pdf %}
                     <a href="{{ event.training_pdf.url }}" download class="btn-secondary-1">
                         📘 Download Training PDF
@@ -95,7 +91,14 @@
                     </a>
                     {% endif %}
 
-                </div>
+                </div> 
+                <br>
+                {% if event.is_future and event.rsvp_enabled %}
+                <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-secondary-2">
+                    Request Service
+                </a>
+                {% endif %}
+
             </div>
 
         </div>

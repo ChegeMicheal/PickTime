@@ -52,18 +52,29 @@ class ForgotPasswordForm(forms.Form):
         })
     )
 
+
 class ContactForm(forms.ModelForm):
     class Meta:
         model = ContactSubmission
-        fields = ['full_name', 'email', 'phone', 'subject', 'service', 'message']
+        fields = [
+            'full_name',
+            'email',
+            'phone',
+            'subject',
+            'service',
+            'message',
+            'attachment',
+        ]
         widgets = {
             'full_name': forms.TextInput(attrs={'placeholder': 'Your full name'}),
             'email': forms.EmailInput(attrs={'placeholder': 'Your email'}),
-            'phone': forms.TextInput(attrs={'placeholder': 'phone'}),
+            'phone': forms.TextInput(attrs={'placeholder': 'Phone'}),
             'subject': forms.TextInput(attrs={'placeholder': 'Subject'}),
             'service': forms.TextInput(attrs={'placeholder': 'Service'}),
-            'message': forms.Textarea(attrs={'placeholder': 'Write your message'}),
+            'message': forms.Textarea(attrs={'placeholder': 'Write your message', 'rows': 5}),
+            'attachment': forms.ClearableFileInput(attrs={'accept': '.pdf,.docx'}),
         }
+
 
 
 
