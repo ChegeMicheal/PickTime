@@ -75,72 +75,144 @@ body {
 .hamburger.open span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
 }
+
 .hamburger.open span:nth-child(2) {
     opacity: 0;
 }
+
 .hamburger.open span:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
 /* ===================== FOOTER ===================== */
 .site-footer {
-    background: grey;
-    padding: 2rem 0;
-    margin-top: 4rem;
+    background:  #f0f4ff;
 }
 
 .footer-container {
     text-align: center;
     font-size: 0.9rem;
 }
-
-/* ===================== MOBILE ===================== */
-@media (max-width: 768px) {
-    .hamburger {
-        display: flex;
-    }
-
-    .site-nav {
-        display: none;
-        flex-direction: column;
-        background: #004aad;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        padding: 1rem 0;
-        text-align: center;
-    }
-
-    .site-nav.nav-active {
-        display: flex;
-    }
+.social-links a {
+    color: #004aad;       /* Brand color */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
 }
+
+.social-links a:hover {
+    color: #002766;       /* Darker on hover */
+}
+
+/* ===================== FOOTER BOTTOM ===================== */
+.footer-bottom {
+    background-color: #002766;    /* Dark blue background */
+    color: #ffffff;               /* White text */
+    text-align: center;           /* Center text */
+    padding: 0.75rem 1rem;       /* Top/Bottom padding */
+    font-size: 0.9rem;            /* Slightly smaller text */
+    border-top: 1px solid rgba(255,255,255,0.2); /* Optional subtle divider */
+}
+
+.footer-bottom a {
+    color: #ffbb33;               /* Accent color for link */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.footer-bottom a:hover {
+    color: #ffffff;               /* Invert color on hover */
+}
+
 
 /* ===================== HERO ===================== */
 .hero {
-    background: #f0f4ff;
+    background: #f0f4ff;          /* Light blue background */
     text-align: center;
+    color: #004aad;               /* Text color */
+    position: relative;
 }
 
-.hero h1 {
+/* Hero Title */
+.hero-title {
     font-size: 2.8rem;
-    color: #004aad;
+    font-weight: 700;
+    line-height: 1.2;
 }
+
+/* Hero Subtitle */
+.hero-subtitle {
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+    color: #333;                  /* Darker for readability on light background */
+}
+
+/* Container for hero buttons */
+.hero-buttons {
+    display: flex;
+    justify-content: center;        /* Center buttons horizontally */
+    gap: 1rem;                     /* Space between buttons */
+}
+
+/* Buttons */
+.hero-buttons {
+    font-size: 1.1rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+}
+
+
+
+/* ===================== RESPONSIVE HERO ===================== */
+@media (max-width: 1200px) {
+    .hero-title {
+        font-size: 2.4rem;
+    }
+    .hero-subtitle {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.6rem;
+    }
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+}
+
 
 /* ===================== UNIFORM BUTTONS ===================== */
 .btn-primary,
 .btn-secondary,
 .btn-secondary-1,
-.btn-secondary-2,
-.btn-secondary-1.upload-trigger {
+.btn-secondary-2 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;          /* uniform height */
-    font-size: 1rem;
+    min-height: 44px;
+    /* uniform height */
+    font-size: small;
     line-height: 1.2;
-    padding: 0.75rem 1.4rem;   /* same padding for all */
+    padding: 0.75rem 1.4rem;
+    /* same padding for all */
     border-radius: 6px;
     text-decoration: none;
     box-sizing: border-box;
@@ -149,7 +221,8 @@ body {
     margin: 0;
     font-weight: 600;
     font-family: inherit;
-    width: auto;               /* ensures no extra stretching */
+    width: auto;
+    /* ensures no extra stretching */
 }
 
 /* Primary Button */
@@ -158,6 +231,7 @@ body {
     color: #fff;
     border: 1px solid #004aad;
 }
+
 .btn-primary:hover {
     background: #fff;
     color: #004aad;
@@ -169,16 +243,19 @@ body {
     color: #0044ad;
     border: 1px solid #004aad;
 }
+
 .btn-secondary:hover {
     background: lightgray;
 }
 
-/* Secondary-1 (including upload-trigger) */
+/* Secondary-1  */
 .btn-secondary-1 {
+    font-size: small;
     background: transparent;
     color: #004aad;
     border: 1px solid #004aad;
 }
+
 .btn-secondary-1:hover {
     background: #004aad;
     color: #fff;
@@ -186,10 +263,12 @@ body {
 
 /* Secondary-2 */
 .btn-secondary-2 {
+    font-size: small;
     background: #004aad;
     color: #fff;
     border: 1px solid #004aad;
 }
+
 .btn-secondary-2:hover {
     background: transparent;
     color: #004aad;
@@ -208,13 +287,13 @@ body {
     background: #fff;
     padding: 0.8rem;
     border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .event-row:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .event-image {
@@ -232,7 +311,8 @@ body {
     cursor: zoom-in;
 }
 
-.event-info h1, .event-info h3 {
+.event-info h1,
+.event-info h3 {
     color: #004aad;
     margin-bottom: 0.5rem;
 }
@@ -243,31 +323,73 @@ body {
     margin-bottom: 0.4rem;
 }
 
+.event-info .event-location {
+    margin-bottom: 0.2rem;
+}
+
+.event-date-badge {
+    margin-bottom: 1rem;
+}
+
 .event-actions {
     margin-top: 1rem;
+}
+
+/* ===================== DOWNLOADS CARD ===================== */
+.event-downloads {
+    margin-top: 1.2rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid #c1d2eb;
+    /* light border for desktop */
+}
+
+/* Title */
+.downloads-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Button container */
+.downloads-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* Add clean spacing between text and icon */
+.downloads-actions a i {
+    margin-left: 0.5rem;
+    /* space between text and icon */
 }
 
 /* IMAGE ZOOM */
-#img-zoom, .img-zoom-overlay {
+#img-zoom,
+.img-zoom-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0, 0, 0, 0.85);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 9999;
 }
 
-#img-zoom img, .img-zoom-overlay img {
+#img-zoom img,
+.img-zoom-overlay img {
     max-width: 92%;
     max-height: 92%;
     object-fit: contain;
     border-radius: 12px;
 }
 
-#img-zoom:target, .img-zoom-overlay:target {
+#img-zoom:target,
+.img-zoom-overlay:target {
     display: flex;
 }
 
@@ -282,22 +404,39 @@ body {
 }
 
 /* ===================== EVENT BADGES ===================== */
-.upcoming-event .event-date-badge { background: #1b7f3b; }
-.ongoing-event .event-date-badge   { background: #b35c00; }
-.past-event .event-date-badge      { background: #6b7280; }
+.upcoming-event .event-date-badge {
+    background: #1b7f3b;
+}
+
+.ongoing-event .event-date-badge {
+    background: #b35c00;
+}
+
+.past-event .event-date-badge {
+    background: #6b7280;
+}
 
 .event-date-badge {
     background-color: #fff;
     padding: 0.5rem;
     border-radius: 5px;
-    border: 1px solid #004aad;
     margin-top: 0.5rem;
     font-size: 0.9rem;
 }
 
-.event-date-badge .event-cost { color: black; }
-.event-date-badge .event-location { margin-top: 0.25rem; color: #004aad; }
-.event-date-badge .event-date { font-weight: bold; color: red; }
+.event-date-badge .event-cost {
+    color: black;
+}
+
+.event-date-badge .event-location {
+    margin-top: 0.25rem;
+    color: #004aad;
+}
+
+.event-date-badge .event-date {
+    font-weight: bold;
+    color: red;
+}
 
 /* ===================== GALLERY ===================== */
 .photo-card {
@@ -329,17 +468,22 @@ body {
     gap: 1rem;
 }
 
+/* ===================== CONTACT SECTION HEADER CENTERING ===================== */
 .section-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    max-width: 700px;       /* keeps text from stretching too wide */
+    max-width: 700px;
+    margin: 1rem auto;
+    /* center horizontally */
 }
 
 .section-header h2 {
-    color: #0044ad;         /* your primary color */
+    color: #0044ad;
+    /* your primary color */
     font-size: 2.4rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
-    position: relative;
 }
 
 .section-header p {
@@ -351,13 +495,20 @@ body {
 
 
 .contact-details {
-    background: #ffffff;             /* card background */
-    border-radius: 12px;             /* smooth rounded corners */
-    padding: 1.5rem 2rem;            /* more breathing room */
-    border: 1px solid #004aad;       /* accent border */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* soft shadow */
-    max-width: 500px;                /* optional: keep card narrow */
-    margin: 1rem auto;               /* center horizontally */
+    background: #ffffff;
+    /* card background */
+    border-radius: 12px;
+    /* smooth rounded corners */
+    padding: 1.5rem 2rem;
+    /* more breathing room */
+    border: 1px solid #004aad;
+    /* accent border */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    /* soft shadow */
+    max-width: 500px;
+    /* optional: keep card narrow */
+    margin: 1rem auto;
+    /* center horizontally */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -374,7 +525,8 @@ body {
 }
 
 .contact-details p i {
-    color: #004aad;                 /* icon accent color */
+    color: #004aad;
+    /* icon accent color */
     margin-right: 0.5rem;
 }
 
@@ -393,9 +545,12 @@ body {
 /* Wrapper centers everything */
 .contact-form-wrapper {
     display: flex;
-    justify-content: center;    /* horizontal centering */
-    align-items: flex-start;    /* top alignment */
-    background: #f7f9ff;        /* subtle section background */
+    justify-content: center;
+    /* horizontal centering */
+    align-items: flex-start;
+    /* top alignment */
+    background: #f7f9ff;
+    /* subtle section background */
 }
 
 /* Form Card */
@@ -414,7 +569,8 @@ body {
     color: #0044ad;
     font-size: 2rem;
     margin-bottom: 1rem;
-    text-align: center;         /* center the heading */
+    text-align: center;
+    /* center the heading */
 }
 
 /* Paragraph under heading (optional) */
@@ -435,11 +591,11 @@ body {
 /* Individual field wrapper */
 .form-field {
     display: flex;
-    flex-direction: column;     /* label above input for modern look */
     gap: 0.4rem;
 }
 
 .form-field label {
+    min-width: 100px;
     font-weight: 600;
     color: #0044ad;
 }
@@ -478,33 +634,62 @@ textarea.form-field {
     border: 1px solid #0044ad;
 }
 
-.btn-secondary-1.upload-trigger {
+
+/* ===================== FILE WRAPPER ===================== */
+/* Desktop: label + input on same line */
+@media (min-width: 769px) {
+    .file-wrapper {
+        display: flex;
+        align-items: center;
+        /* vertically align label & input */
+        gap: 0.5rem;
+        /* spacing between label and input */
+    }
+
+    .file-wrapper label {
+        white-space: nowrap;
+        /* prevent wrapping */
+        font-weight: 600;
+        color: #0044ad;
+    }
+
+    #fileWrapper input {
+        width: auto;
+        /* shrink to fit content */
+        flex: 1;
+        /* take remaining space */
+    }
+}
+
+
+/* Make upload button look like a link */
+.upload-trigger {
     width: fit-content;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    border: 1px solid #0044ad;
-    background: transparent;
     color: #0044ad;
+    text-decoration: underline;
+    padding: 0.5rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    display: inline;
+    /* inline like a normal link */
+    transition: color 0.2s ease;
+    font-size: small;
+    border: none;
+    border-radius: 16px;
 }
 
-.btn-secondary-1.upload-trigger:hover {
-    background: #0044ad;
-    color: #fff;
+.upload-trigger:hover {
+    color: purple;
+    border: 1px solid #0044ad;
 }
 
-/* File wrapper */
-.file-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
+.upload-trigger i {
+    font-size: 1.3rem;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    /* spacing to text */
 }
 
-#fileWrapper input {
-    width: 100%;
-}
+
 
 /* Success message */
 .success-message {
@@ -518,9 +703,12 @@ textarea.form-field {
     position: relative;
     margin-top: 1.5rem;
     width: 100%;
-    height: 400px;  /* match the previous iframe height */
-    border-radius: 12px; /* optional rounded corners */
-    overflow: hidden;    /* ensures iframe doesn't spill out */
+    height: 400px;
+    /* match the previous iframe height */
+    border-radius: 12px;
+    /* optional rounded corners */
+    overflow: hidden;
+    /* ensures iframe doesn't spill out */
 }
 
 .map-wrapper iframe {
@@ -546,7 +734,7 @@ textarea.form-field {
     border-radius: 6px;
     margin-bottom: 10px;
     min-width: 280px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -562,8 +750,17 @@ textarea.form-field {
 }
 
 /* ===================== MINI SERVICES ===================== */
-.mini-services { display: none; margin-top: 10px; padding-left: 20px; }
-@media (min-width: 992px) { .mini-services { display: block; } }
+.mini-services {
+    display: none;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+@media (min-width: 992px) {
+    .mini-services {
+        display: block;
+    }
+}
 
 /* ===================== JOB BADGES ===================== */
 .job-badge {
@@ -579,15 +776,24 @@ textarea.form-field {
 .job-badge[data-days="0"] {
     background: #b30000;
 }
+
 .job-badge[data-days="1"],
 .job-badge[data-days="0"] {
     animation: pulse 1.4s infinite;
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* ===================== MONTH NAV ===================== */
@@ -604,10 +810,22 @@ textarea.form-field {
     border-bottom: 1px solid #eee;
 }
 
-#currentMonthLabel { font-size: 1.2rem; font-weight: 600; }
-#monthPicker { padding: 0.4rem 0.6rem; cursor: pointer; }
+#currentMonthLabel {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
 
-.no-events { text-align: center; margin-top: 2rem; font-style: italic; color: #777; }
+#monthPicker {
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+}
+
+.no-events {
+    text-align: center;
+    margin-top: 2rem;
+    font-style: italic;
+    color: #777;
+}
 
 /* ===================== PLACEHOLDER IMAGES ===================== */
 .placeholder-image {
@@ -633,15 +851,144 @@ textarea.form-field {
 
 .floating-back-btn .btn {
     background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* ===================== MOBILE STYLES ===================== */
 @media (max-width: 768px) {
-    .floating-back-btn { top: auto; bottom: 16px; left: 16px; }
-}
 
-/* ===================== MOBILE EVENTS ===================== */
-@media (max-width: 768px) {
-    .event-row { flex-direction: column; }
-    .event-image { width: 100%; }
+    /* Hamburger menu */
+    .hamburger {
+        display: flex;
+    }
+
+    .site-nav {
+        display: none;
+        flex-direction: column;
+        background: #004aad;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        text-align: center;
+        z-index: 1000;
+        /* ensures it’s above other content */
+    }
+
+    .site-nav.nav-active {
+        display: flex;
+    }
+
+    .event-row {
+        flex-direction: column;
+        gap: 0.6rem;
+        /* reduce space between items */
+        padding: 0.6rem;
+        /* slightly smaller padding for mobile */
+    }
+
+    .event-image {
+        width: 100%;
+        /* take full width */
+        height: auto;
+        /* let image scale naturally */
+        margin-bottom: 0.4rem;
+        /* space below image */
+    }
+
+    .event-image img {
+        height: auto;
+        /* scale image proportionally */
+        max-height: 220px;
+        /* optional limit */
+    }
+
+    .event-info {
+        padding: 0.25rem 0;
+        /* small top/bottom padding */
+    }
+
+    .event-info h1,
+    .event-info h3 {
+        margin-bottom: 0.3rem;
+        /* reduce spacing under headings */
+    }
+
+    .event-date-badge {
+        margin-bottom: 0.6rem;
+        border: 1px solid #c1d2eb;
+
+    }
+
+    .event-actions {
+        margin-top: 0.6rem;
+    }
+
+    /* Floating back button position */
+    .floating-back-btn {
+        top: auto;
+        bottom: 16px;
+        left: 16px;
+    }
+
+
+    /* ===================== DOWNLOADS CARD ===================== */
+    .event-downloads {
+        margin-top: 1.2rem;
+        padding: 1rem;
+        border-radius: 12px;
+        background: #ffffff;
+        border: 1px solid #c1d2eb;
+        /* light border for desktop */
+    }
+
+    /* Title */
+    .downloads-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    /* Button container */
+    .downloads-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .downloads-actions a {
+        font-size: small;
+    }
+
+    /* Add clean spacing between text and icon */
+    .downloads-actions a i {
+        margin-left: 0.5rem;
+        /* space between text and icon */
+    }
+
+    /* Individual field wrapper */
+    .form-field {
+        display: flex;
+        flex-direction: column;
+        /* label above input for modern look */
+        gap: 0.4rem;
+    }
+
+    .form-field label {
+        font-weight: 600;
+        color: #0044ad;
+    }
+
+    .file-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #fileWrapper input {
+        width: 100%;
+    }
 }

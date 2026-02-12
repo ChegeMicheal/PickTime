@@ -37,6 +37,7 @@ if NGROK_URL:
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
+    "192.168.100.28",
     "localhost",
 ]
 
@@ -52,6 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+
 
     'store',
     'jobs',

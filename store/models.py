@@ -10,7 +10,7 @@ from django.utils.text import slugify
 class Service(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True, null=True)
-    short_description = models.TextField()
+    short_description = models.TextField(blank=True, null=True)  # <-- allow blank
     image = models.ImageField(upload_to="services/", blank=True, null=True)
 
     parent = models.ForeignKey(
@@ -19,7 +19,7 @@ class Service(models.Model):
         null=True,
         blank=True,
         related_name="mini_services"
-    )  # New field to link mini-services to parent
+    )
 
     is_active = models.BooleanField(default=True)
     order = models.PositiveIntegerField(default=0)
@@ -30,6 +30,7 @@ class Service(models.Model):
 
     def __str__(self):
         return self.title
+
 
 # =========================
 # EVENTS

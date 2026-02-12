@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}{{ event.title }} | Picktime Consulting{% endblock %}
 
@@ -24,6 +25,12 @@
                 </div>
                 {% endif %}
 
+            </div>
+
+            <!-- ===================== EVENT INFO ===================== -->
+            <div class="event-info">
+                <h1>{{ event.title }}</h1>
+
                 <!-- ===================== DATE / LOCATION / COST BADGE ===================== -->
                 <div class="event-date-badge">
                     <div class="event-date">
@@ -37,65 +44,56 @@
 
                     {% if event.location %}
                     <div class="event-location">
-                        📍 {{ event.location }}
+                        <i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;{{ event.location }}
                     </div>
                     {% endif %}
 
-                    {% if event.cost %}
                     <div class="event-cost">
-                        💰 KES {{ event.cost }}
+                        <i class="fas fa-sack-dollar"></i>&nbsp;&nbsp;
+                        {% if event.cost %}KES {{ event.cost|floatformat:0|intcomma }}
+
+                        {% else %}Free{% endif %}
                     </div>
-                    {% else %}
-                    <div class="event-cost">
-                        💰 Free
-                    </div>
-                    {% endif %}
                 </div>
-            </div>
-
-            <!-- ===================== EVENT INFO ===================== -->
-            <div class="event-info">
-                <h1>{{ event.title }}</h1>
-
-                <!-- STATUS -->
-                {% if event.is_future %}
-                <span class="status upcoming">Upcoming</span>
-                {% elif event.is_past %}
-                <span class="status past">Past Event</span>
-                {% else %}
-                <span class="status ongoing">Ongoing</span>
-                {% endif %}
-
-                <!-- CATEGORY -->
-                {% if event.category %}
-                <p class="event-category">Category: {{ event.category.title }}</p>
-                {% endif %}
 
                 <!-- DESCRIPTION -->
                 <div class="event-description">
                     {{ event.description|linebreaks }}
                 </div>
 
-                <!-- ===================== ACTIONS ===================== -->
-                <div class="event-actions">
+                <!-- ===================== DOWNLOADS CARD ===================== -->
+                {% if show_downloads %}
+                <div class="event-downloads">
+                    <h4 class="downloads-title">
+                        <i class="fa-solid fa-download"></i> Downloads
+                    </h4>
+                    <div class="downloads-actions">
 
-                    {% if event.training_pdf %}
-                    <a href="{{ event.training_pdf.url }}" download class="btn-secondary-1">
-                        📘 Download Training PDF
-                    </a>
-                    {% endif %}
 
-                    {% if event.nomination_form %}
-                    <a href="{{ event.nomination_form.url }}" download class="btn-secondary-2">
-                        📝 Download Nomination Form
-                    </a>
-                    {% endif %}
+                        {% if event.training_pdf %}
+                        <a href="{{ event.training_pdf.url }}" download class="btn-secondary-1">
+                            Training PDF <i class="fa-solid fa-file-pdf"></i>
+                        </a>
+                        {% endif %}
 
-                </div> 
+                        {% if event.nomination_form %}
+                        <a href="{{ event.nomination_form.url }}" download class="btn-secondary-1">
+                            Nomination Form <i class="fa-solid fa-file-signature"></i>
+                        </a>
+                        {% endif %}
+
+
+                    </div>
+
+                </div>
+                {% endif %}
+
                 <br>
                 {% if event.is_future and event.rsvp_enabled %}
                 <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-secondary-2">
-                    Request Service
+                    Reserve Your Spot
+                    <i class="fas fa-file-signature" style="margin-right: 6px;margin-left: 6px;"></i>
+                    <i class="fas fa-paperclip" style="margin-right: 6px;"></i>
                 </a>
                 {% endif %}
 
@@ -115,7 +113,7 @@
                     </a>
                 </div>
 
-                <!-- Zoom overlay -->
+                <!-- Zoom overlay for each gallery photo -->
                 <div id="img-zoom-{{ event.id }}-{{ forloop.counter }}" class="img-zoom-overlay">
                     <img src="{{ photo.image.url }}" alt="{{ event.title }}">
                 </div>
@@ -128,13 +126,9 @@
 </section>
 
 <!-- ===================== MAIN IMAGE ZOOM ===================== -->
-<div id="img-zoom-main" class="img-zoom-overlay">
-    {% if event.thumbnail %}
+{% if event.thumbnail %}
+<div id="img-zoom-{{ event.id }}" class="img-zoom-overlay">
     <img src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
-    {% else %}
-    <div class="placeholder-image">
-        <span>No Image Available</span>
-    </div>
-    {% endif %}
 </div>
+{% endif %}
 {% endblock %}

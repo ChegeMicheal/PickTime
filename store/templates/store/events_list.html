@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Events | Picktime Consulting{% endblock %}
 
@@ -34,7 +35,10 @@
                         <span>📅 No Image</span>
                     </div>
                     {% endif %}
-
+                </div>
+                <!-- ===================== EVENT INFO ===================== -->
+                <div class="event-info">
+                    <h3>{{ event.title }}</h3>
                     <!-- ===================== DATE / LOCATION / COST BADGE ===================== -->
                     <div class="event-date-badge">
                         <div class="event-date">
@@ -48,34 +52,28 @@
 
                         {% if event.location %}
                         <div class="event-location">
-                            📍 {{ event.location }}
+                            <i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;{{ event.location }}
                         </div>
                         {% endif %}
 
                         {% if event.cost %}
                         <div class="event-cost">
-                            💰 KES {{ event.cost }}
+                            <i class="fas fa-sack-dollar"></i>&nbsp;&nbsp;KES {{ event.cost|floatformat:0|intcomma }}
                         </div>
                         {% else %}
                         <div class="event-cost">
-                            💰 Free
+                            <i class="fas fa-sack-dollar"></i>&nbsp;&nbsp;Free
                         </div>
                         {% endif %}
                     </div>
-                </div>
 
-                <!-- ===================== EVENT INFO ===================== -->
-                <div class="event-info">
-                    <h3>{{ event.title }}</h3>
                     <p>{{ event.description|truncatewords:30 }}</p>
 
                     <div class="event-actions">
-                        {% if event.rsvp_enabled and event.end_date >= today %}
-                        <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-secondary-1">
-                            Request Service
+                        <a href="{% url 'event_detail' event.id %}" class="btn-secondary-1">
+                            Access Resources
+                            <i class="fas fa-file-arrow-down" style="margin-right:6px;margin-left:6px;"></i>
                         </a>
-                        {% endif %}
-                        <a href="{% url 'event_detail' event.id %}" class="btn-secondary">View Details</a>
                     </div>
                 </div>
             </div>

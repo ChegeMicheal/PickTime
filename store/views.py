@@ -36,7 +36,6 @@ def signup_view(request):
 # -------------------------
 # LANDING PAGE
 # -------------------------
-from datetime import timedelta
 def landing(request):
     services = Service.objects.filter(parent__isnull=True, is_active=True)
     
@@ -69,6 +68,7 @@ def landing(request):
         "ongoing_events": ongoing_events,
         "upcoming_events": upcoming_events,
         "past_events": past_events,
+        "today": timezone.now().date(),
     }
 
     return render(request, 'store/landing.html', context)
@@ -144,28 +144,32 @@ def services(request):
 # -------------------------
 # SERVICE DETAIL PAGE
 # -------------------------
-from django.utils.timezone import now
+from django.db.models import Q
 
 def service_detail(request, service_id):
     service = get_object_or_404(Service, id=service_id)
     today = timezone.now().date()
     one_month_later = today + timedelta(days=30)
-    
-    # Get related events
-    related_events = Event.objects.filter(category=service, start_date__gt=today,start_date__lte=one_month_later).order_by('start_date')
-        
-    previous_url = (
-        request.GET.get("next")
-        or request.META.get("HTTP_REFERER")
-    )
+
+    # Include mini-services
+    mini_service_ids = service.mini_services.values_list('id', flat=True)
+
+    # Fetch events for parent OR any mini-services
+    related_events = Event.objects.filter(
+        Q(category=service) | Q(category__in=mini_service_ids),
+        start_date__gt=today,
+        start_date__lte=one_month_later
+    ).order_by('start_date')
+
+    previous_url = request.GET.get("next") or request.META.get("HTTP_REFERER")
 
     return render(request, 'store/service_detail.html', {
-        "service": service, 
+        "service": service,
         "previous_url": previous_url,
         "related_events": related_events,
-        "today": today,  # for past/future logic
+        "today": today,
     })
-    
+
     
 # -------------------------
 # EVENTS PAGE
@@ -208,21 +212,31 @@ def events_list(request):
 
     return render(request, "store/events_list.html", context)
 
-
-
 # -------------------------
 # EVENT DETAIL PAGE
 # -------------------------
 def event_detail(request, event_id):
     event = get_object_or_404(Event, id=event_id)
-    
+
+    today = timezone.now().date()
+
+    # Show downloads only if event has not ended
+    show_downloads = event.end_date and event.end_date >= today
+
     previous_url = (
         request.GET.get("next")
         or request.META.get("HTTP_REFERER")
     )
 
-    return render(request,"store/event_detail.html",{"event": event,"previous_url": previous_url,})
-
+    return render(
+        request,
+        "store/event_detail.html",
+        {
+            "event": event,
+            "previous_url": previous_url,
+            "show_downloads": show_downloads,
+        },
+    )
 
 # -------------------------
 # RSVP PAGES

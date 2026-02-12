@@ -1,17 +1,39 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
 {% block title %}Home | Picktime Consulting{% endblock %}
 
 {% block content %}
 
 <!-- ===================== HERO ===================== -->
 <section class="hero">
-    <div class="container hero-content">
-        <h1>{{ hero.title|default:"Empowering Kenyan Enterprises" }}</h1>
-        <p>{{ hero.subtitle|default:"Partnering with organizations to unlock growth and impact." }}</p> <br>
-        <a href="#events" class="btn-secondary">Explore Events</a> <br>
+    <div class="container hero-content text-center">
+        <!-- Main Headline -->
+        <h1 class="hero-title">
+          Empowering Kenyan Enterprises with Strategic Consulting
+        </h1>
+
+        <!-- Subheading with Value Proposition -->
+        <p class="hero-subtitle">
+           We partner with organizations to unlock growth, build capacity, and deliver
+            measurable impact.
+        </p>
+        <div class="hero-buttons">
+            <!-- Primary Call-To-Action -->
+            <a href="#services" class="btn-secondary-1">
+                Explore Our Services
+            </a>
+
+            <!-- Secondary Action – Events or Contact -->
+            <a href="#events" class="btn-secondary-1">
+                Upcoming Events & Training
+            </a>
+        </div>
+
+
     </div>
 </section>
+
 <!-- ===================== SERVICES ===================== -->
 <section id="services" class="services-section">
     <div class="container">
@@ -32,38 +54,41 @@
                 </a>
             </div>
 
-
             <!-- Service info -->
             <div class="service-info event-info">
                 <h3>{{ service.title }}</h3>
                 <p>{{ service.short_description|default:"No description set." }}</p>
-                <!-- MINI SERVICES (desktop only) -->
-                {% if service.mini_services.all %}
-                <ul class="mini-services">
-                    <h4 style="color: darkblue;">Mini services</h4>
-                    {% for mini in service.mini_services.all %}
-                    <li style="margin-left: 20px;">
-                        <strong>{{ mini.title }}</strong>
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
 
+                <!-- MINI SERVICES -->
+                {% if service.mini_services.exists %}
+                <div class="mini-services">
+                    <h4 style="color: darkblue;">Mini Services</h4>
+                    <ul>
+                        {% for mini in service.mini_services.all %}
+                        <li>
+                            {{ mini.title }}
+                            {% if mini.short_description %}
+                            <p style="margin-left: 1rem;">{{ mini.short_description }}</p>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
                 <div class="event-actions">
                     <a href="{% url 'service_detail' service.id %}" class="btn-secondary-1">
-                        Learn More
+                        Explore Details <i class="fas fa-info-circle" style="margin-left:6px;"></i>
                     </a>
                     <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
-                        class="btn-secondary">
+                        class="btn-secondary-1">
                         Request Service
+                        <i class="fas fa-file-signature" style="margin-left: 6px;"></i>
                     </a>
                 </div>
 
             </div>
-
         </div>
         {% endfor %}
-
         {% else %}
         <p class="no-events-msg">No services available at the moment.</p>
         {% endif %}
@@ -71,10 +96,11 @@
     </div>
 </section>
 
+
 <!-- ===================== EVENTS ===================== -->
 <section id="events" class="events-section">
     <div class="container">
-        <h2>Events & Our Journey</h2>
+        <h2>Ongoing & Upcoming Events</h2>
 
         {% for event in current_events %}
         <div class="event-row {% if event.is_past %}past-event{% endif %}">
@@ -90,48 +116,45 @@
                     <span>📅 No Image</span>
                 </div>
                 {% endif %}
-
-                <!-- ===================== DATE / LOCATION / COST BADGE ===================== -->
-                <div class="event-date-badge">
-                    <div class="event-date">
-                        {{ event.start_date|date:"M d, Y" }}
-                        {% if event.end_date and event.end_date != event.start_date %}
-                        – {{ event.end_date|date:"M d, Y" }}
-                        {% endif %}
-                    </div>
-
-                    {% if event.location %}
-                    <div class="event-location">📍 {{ event.location }}</div>
-                    {% endif %}
-
-                    {% if event.cost %}
-                    <div class="event-cost">💰 KES {{ event.cost }}</div>
-                    {% else %}
-                    <div class="event-cost">💰 Free</div>
-                    {% endif %}
-
-                    <!-- {% if event.category %}
-                    <div class="event-category">🏷️ {{ event.category.title }}</div>
-                    {% endif %} -->
-                </div>
             </div>
 
             <!-- ===================== EVENT INFO ===================== -->
             <div class="event-info">
                 <h3>{{ event.title }}</h3>
-                <p class="event-date">
-                    {{ event.start_date|date:"M d" }}
-                    {% if event.end_date %} – {{ event.end_date|date:"M d, Y" }}{% endif %}
-                </p>
+                <!-- ===================== DATE / LOCATION / COST BADGE ===================== -->
+                <div class="event-date-badge">
+                    <div class="event-date">
+                        {{ event.start_date|date:"M d" }}
+                        {% if event.end_date and event.end_date != event.start_date %}
+                        – {{ event.end_date|date:"M d, Y" }}
+                        {% else %}
+                        , {{ event.start_date|date:"Y" }}
+                        {% endif %}
+                    </div>
+
+                    {% if event.location %}
+                    <div class="event-location">
+                        <i class="fa-solid fa-location-dot"></i>&nbsp;&nbsp;{{ event.location }}
+                    </div>
+                    {% endif %}
+
+                    {% if event.cost %}
+                    <div class="event-cost">
+                        <i class="fas fa-sack-dollar"></i>&nbsp;&nbsp;KES {{ event.cost|floatformat:0|intcomma }}
+                    </div>
+                    {% else %}
+                    <div class="event-cost">
+                        <i class="fas fa-sack-dollar"></i>&nbsp;&nbsp;Free
+                    </div>
+                    {% endif %}
+                </div>
                 <p>{{ event.description|truncatewords:28 }}</p>
 
                 <div class="event-actions">
-                    {% if not event.is_past and event.rsvp_enabled %}
-                    <a href="{% url 'contact' %}?subject={{ event.title }}&service=Event RSVP" class="btn-secondary">
-                        Request Service
+                    <a href="{% url 'event_detail' event.id %}" class="btn-secondary-1">
+                        Access Resources
+                        <i class="fas fa-file-arrow-down" style="margin-right:6px;margin-left:6px;"></i>
                     </a>
-                    {% endif %}
-                    <a href="{% url 'event_detail' event.id %}" class="btn-secondary-1">View Details</a>
                 </div>
             </div>
         </div>
@@ -151,10 +174,9 @@
         {% endfor %}
 
         <!-- ====== VIEW ALL EVENTS BUTTON ====== -->
-         <br>
+        <br>
         <a href="{% url 'events_list' %}" class="btn-secondary-1">View All Events</a>
     </div>
 </section>
-
 
 {% endblock %}

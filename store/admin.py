@@ -46,10 +46,19 @@ class ServiceAdmin(admin.ModelAdmin):
 # =========================
 # EVENT PHOTOS INLINE
 # =========================
-class EventPhotoInline(admin.TabularInline):
+class EventPhotoInline(admin.StackedInline):
     model = EventPhoto
     extra = 1
+    max_num = None
+    can_delete = True
+    readonly_fields = ('image_preview',)
+    fields = ('image', 'caption', 'image_preview')
 
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="height: 80px;"/>', obj.image.url)
+        return ""
+    image_preview.short_description = "Preview"
 
 # =========================
 # EVENTS ADMIN
@@ -59,6 +68,9 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ("title", "category", "start_date", "end_date", "location", "cost", "status", "featured")
     list_filter = ("featured", "rsvp_enabled", "start_date", "category")
     search_fields = ("title", "location", "category__title")
+
+    # Attach EventPhoto inline here
+    inlines = [EventPhotoInline]
 
     fieldsets = (
         ("Event Details", {
@@ -77,16 +89,6 @@ class EventAdmin(admin.ModelAdmin):
             "fields": ("featured", "rsvp_enabled")
         }),
     )
-
-
-# =========================
-# EVENT PHOTOS (OPTIONAL SEPARATE VIEW)
-# =========================
-@admin.register(EventPhoto)
-class EventPhotoAdmin(admin.ModelAdmin):
-    list_display = ("event", "caption")
-    search_fields = ("event__title",)
-
 
 @admin.register(ContactSubmission)
 class ContactSubmissionAdmin(admin.ModelAdmin):

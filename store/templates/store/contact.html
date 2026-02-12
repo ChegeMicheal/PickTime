@@ -21,7 +21,7 @@
             <p><strong><i class="fa fa-envelope" aria-hidden="true"></i>:</strong> <a
                     href="mailto:info@picktimeconsulting.co.ke">info@picktimeconsulting.co.ke</a>
             </p>
-            <p><strong><i class="fa fa-address-card" aria-hidden="true"></i>:</strong> Maendeleo House, 6th Floor, Along
+            <p><strong><i class="fa-solid fa-location-dot"></i>:</strong> Maendeleo House, 6th Floor, Along
                 Monrovia Street, Opposite Anniversary Towers,
                 Nairobi, Kenya</p>
         </div>
@@ -35,16 +35,6 @@
                     class="contact-form-fields">
 
                     {% csrf_token %}
-
-                    <!-- Upload nomination trigger -->
-                    <button type="button" class="btn-secondary-1 upload-trigger" id="uploadBtn">
-                        Upload Filled Nomination Form
-                    </button>
-
-                    <div id="fileWrapper" class="file-wrapper" style="display:none;">
-                        <label for="attachment" style="color: #0044ad;">Attach Nomination Document (PDF / DOCX)</label>
-                        <input type="file" name="attachment" id="attachment" accept=".pdf,.docx">
-                    </div>
 
                     <div class="form-field"> <label for="full_name">Full Name</label>
                         {{ form.full_name }}</div>
@@ -63,6 +53,15 @@
 
                     <div class="form-field"> <label for="message">Message</label>
                         {{ form.message }}</div>
+                    <!-- Upload nomination trigger -->
+                    <button type="button" class="upload-trigger" id="uploadBtn">
+                        <i class="fas fa-paperclip" style="margin-right: 6px;"></i>Filled Nomination Form
+                    </button>
+
+                    <div id="fileWrapper" class="file-wrapper" style="display:none;">
+                        <label for="attachment" style="color: #0044ad;">Attach Nomination Document (PDF / DOCX):</label>
+                        <input type="file" name="attachment" id="attachment" accept=".pdf,.docx">
+                    </div>
 
                     <button type="submit" class="btn-primary">Send
                         Message</button>
@@ -109,7 +108,7 @@
                     subjectInput.classList.add("prefilled");
 
 
-                    uploadBtn.innerHTML = "❌ I don't have one";
+                    uploadBtn.innerHTML = '<i class="fas fa-x" style="margin-right: 6px;"></i> I do not have the form';
                     uploadBtn.classList.add("btn-danger");
 
 
@@ -123,7 +122,7 @@
                     subjectInput.classList.remove("prefilled");
 
 
-                    uploadBtn.innerHTML = 'Upload Filled Nomination Form';
+                    uploadBtn.innerHTML = '<i class="fas fa-paperclip" style="margin-right: 6px;"></i>Filled Nomination Form';
                     uploadBtn.classList.remove("btn-danger");
                 }
             });

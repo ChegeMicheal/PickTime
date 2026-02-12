@@ -36,7 +36,7 @@
                     <h4 style="color: darkblue;">Mini services</h4>
                     {% for mini in service.mini_services.all %}
                     <li style="margin-left: 20px;">
-                        <strong>{{ mini.title }}</strong>
+                        {{ mini.title }}
                     </li>
                     {% endfor %}
                 </ul>
@@ -44,11 +44,12 @@
 
                 <div class="event-actions">
                     <a href="{% url 'service_detail' service.id %}" class="btn-secondary-1">
-                        Learn More
+                        Explore Details <i class="fas fa-info-circle" style="margin-left:6px;"></i>
                     </a>
                     <a href="{% url 'contact' %}?subject={{ service.title }}&service={{ service.slug }}"
-                        class="btn-secondary">
+                        class="btn-secondary-1">
                         Request Service
+                        <i class="fas fa-file-signature" style="margin-left: 6px;"></i>
                     </a>
                 </div>
 
