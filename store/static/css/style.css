@@ -14,52 +14,66 @@ body {
 .container {
     max-width: 1200px;
     margin: auto;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 /* ===================== HEADER ===================== */
 .site-header {
-    background: #004aad;
+    background-color: #004aad;
     position: sticky;
     top: 0;
     z-index: 1000;
+    height: 48px;
+    /* Slim header */
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    /* horizontal padding */
 }
 
 .header-container {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    position: relative;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 .logo-img {
-    height: 36px;
+    height: 28px;
+    /* keeps logo proportional */
+    display: block;
 }
 
 /* ===================== NAV ===================== */
 .site-nav {
     display: flex;
     gap: 1.2rem;
+    align-items: center;
 }
 
 .site-nav a {
-    color: #fff;
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    line-height: 1;
+    padding: 0;
+    margin: 0;
     text-decoration: none;
-    margin: 2px;
+    color: #fff;
 }
 
 .site-nav a:hover {
     color: #004aad;
     background: #fff;
-    text-decoration: none;
 }
 
 /* ===================== HAMBURGER ===================== */
 .hamburger {
     display: none;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     background: none;
     border: none;
     cursor: pointer;
@@ -86,51 +100,64 @@ body {
 
 /* ===================== FOOTER ===================== */
 .site-footer {
-    background:  #f0f4ff;
+    background: #f0f4ff;
 }
 
 .footer-container {
     text-align: center;
     font-size: 0.9rem;
 }
+
 .social-links a {
-    color: #004aad;       /* Brand color */
+    color: #004aad;
+    /* Brand color */
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
 .social-links a:hover {
-    color: #002766;       /* Darker on hover */
+    color: #002766;
+    /* Darker on hover */
 }
 
 /* ===================== FOOTER BOTTOM ===================== */
 .footer-bottom {
-    background-color: #002766;    /* Dark blue background */
-    color: #ffffff;               /* White text */
-    text-align: center;           /* Center text */
-    padding: 0.75rem 1rem;       /* Top/Bottom padding */
-    font-size: 0.9rem;            /* Slightly smaller text */
-    border-top: 1px solid rgba(255,255,255,0.2); /* Optional subtle divider */
+    background-color: #002766;
+    /* Dark blue background */
+    color: #ffffff;
+    /* White text */
+    text-align: center;
+    /* Center text */
+    padding: 0.75rem 1rem;
+    /* Top/Bottom padding */
+    font-size: 0.9rem;
+    /* Slightly smaller text */
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    /* Optional subtle divider */
 }
 
 .footer-bottom a {
-    color: #ffbb33;               /* Accent color for link */
+    color: #ffbb33;
+    /* Accent color for link */
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
 .footer-bottom a:hover {
-    color: #ffffff;               /* Invert color on hover */
+    color: #ffffff;
+    /* Invert color on hover */
 }
 
 
 /* ===================== HERO ===================== */
 .hero {
-    background: #f0f4ff;          /* Light blue background */
+    background: #f0f4ff;
+    /* Light blue background */
     text-align: center;
-    color: #004aad;               /* Text color */
+    color: #004aad;
+    /* Text color */
     position: relative;
 }
 
@@ -148,14 +175,17 @@ body {
     margin-left: auto;
     margin-right: auto;
     line-height: 1.5;
-    color: #333;                  /* Darker for readability on light background */
+    color: #333;
+    /* Darker for readability on light background */
 }
 
 /* Container for hero buttons */
 .hero-buttons {
     display: flex;
-    justify-content: center;        /* Center buttons horizontally */
-    gap: 1rem;                     /* Space between buttons */
+    justify-content: center;
+    /* Center buttons horizontally */
+    gap: 1rem;
+    /* Space between buttons */
 }
 
 /* Buttons */
@@ -174,6 +204,7 @@ body {
     .hero-title {
         font-size: 2.4rem;
     }
+
     .hero-subtitle {
         font-size: 1.15rem;
     }
@@ -183,6 +214,7 @@ body {
     .hero-title {
         font-size: 2rem;
     }
+
     .hero-subtitle {
         font-size: 1rem;
         max-width: 90%;
@@ -193,6 +225,7 @@ body {
     .hero-title {
         font-size: 1.6rem;
     }
+
     .hero-subtitle {
         font-size: 0.95rem;
     }
@@ -283,9 +316,9 @@ body {
 .event-row {
     display: flex;
     gap: 1.2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     background: #fff;
-    padding: 0.8rem;
+    padding: 1rem;
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -796,18 +829,20 @@ textarea.form-field {
     }
 }
 
-/* ===================== MONTH NAV ===================== */
+/* ===================== MONTH NAVIGATION ===================== */
+/* Desktop / default */
 .month-nav {
     position: sticky;
-    top: 70px;
+    top: 48px;
+    /* aligns below desktop header */
     z-index: 999;
     background: #fff;
-    padding: 0.75rem 0;
     display: flex;
     gap: 0.75rem;
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid #eee;
+    font-family: inherit;
 }
 
 #currentMonthLabel {
@@ -818,6 +853,8 @@ textarea.form-field {
 #monthPicker {
     padding: 0.4rem 0.6rem;
     cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
 .no-events {
@@ -826,6 +863,29 @@ textarea.form-field {
     font-style: italic;
     color: #777;
 }
+
+.month-nav button {
+    height: 20px;
+    /* smaller, fits well under 48px header */
+    width: 40px;
+    padding: 0 0.5rem;
+    /* horizontal padding for click area */
+    margin: 2px 0;
+    font-size: 1rem;
+    /* slightly smaller than label */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.month-nav button:hover {
+    background: #e0e0e0;
+}
+
 
 /* ===================== PLACEHOLDER IMAGES ===================== */
 .placeholder-image {
@@ -844,20 +904,33 @@ textarea.form-field {
 /* ===================== FLOATING BACK BUTTON ===================== */
 .floating-back-btn {
     position: fixed;
-    top: 90px;
-    left: 20px;
-    z-index: 2000;
+    top: 60px;           /* small offset from top of header */
+    left: 16px;         /* small inset from left edge */
+    z-index: 2000;      /* above header and content */
 }
 
 .floating-back-btn .btn {
+    height: 25px;               /* fits neatly under header */
+    padding: 0 0.5rem;         /* comfortable click area */
     background: #fff;
+    border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s; /* subtle hover animation */
 }
+
+.floating-back-btn .btn:hover {
+    transform: translateY(-2px);     /* slight lift */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
 
 /* ===================== MOBILE STYLES ===================== */
 @media (max-width: 768px) {
-
-    /* Hamburger menu */
     .hamburger {
         display: flex;
     }
@@ -870,16 +943,33 @@ textarea.form-field {
         top: 100%;
         left: 0;
         width: 100%;
-        padding: 1rem 0;
-        text-align: center;
+        padding: 0.5rem 0;
         z-index: 1000;
-        /* ensures it’s above other content */
     }
 
     .site-nav.nav-active {
         display: flex;
     }
 
+    .site-nav a {
+        display: flex;
+        align-items: center;
+        padding: 0 1rem;
+        font-size: 1rem;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .site-nav a i {
+        width: 2rem;
+        /* fixed icon slot */
+        flex-shrink: 0;
+        display: inline-flex;
+        justify-content: flex-start;
+        margin-right: 0.5rem;
+        /* space between icon and text */
+    }
+    
     .event-row {
         flex-direction: column;
         gap: 0.6rem;

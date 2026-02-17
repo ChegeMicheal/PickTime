@@ -25,10 +25,10 @@
 
             <nav class="site-nav" id="site-nav">
                 <a href="{% url 'landing' %}"><i class="fas fa-home"></i> Home</a>
-                <a href="{% url 'services' %}"><i class="fa-brands fa-servicestack"></i> Services</a>
-                <a href="{% url 'events_list' %}"><i class="fa fa-calendar"></i> Events</a>
-                <a href="{% url 'jobs:list' %}"><i class="fa-solid fa-bullhorn"></i> Careers</a>
-                <a href="{% url 'contact' %}"><i class="fa fa-address-book"></i> Contact</a>
+                <a href="{% url 'services' %}"><i class="fas fa-chalkboard-teacher"></i> Services</a>
+                <a href="{% url 'events_list' %}"><i class="fas fa-calendar-day"></i> Events</a>
+                <a href="{% url 'jobs:list' %}"><i class="fas fa-bullhorn"></i> Careers</a>
+                <a href="{% url 'contact' %}"><i class="fas fa-address-card"></i> Contact</a>
             </nav>
 
             <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
@@ -52,7 +52,9 @@
 
     <!-- ================= MAIN ================= -->
     <main>
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% include "partials/back_button.html" %}
+        {% endblock %}
     </main>
 
     <!-- ================= FOOTER ================= -->
