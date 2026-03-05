@@ -40,8 +40,7 @@ body {
 }
 
 .logo-img {
-    height: 28px;
-    /* keeps logo proportional */
+    height: 48px;
     display: block;
 }
 

@@ -1,11 +1,3 @@
-<!-- {% comment %}
-Reusable Back Button
-Priority:
-1. Explicit `previous_url` from view (HTTP_REFERER or ?next=)
-2. Browser history
-3. Fallback URL (optional)
-{% endcomment %} -->
-
 <div class="floating-back-btn">
     {% if previous_url %}
         <a href="{{ previous_url }}" class="btn btn-outline-secondary">
